@@ -1,0 +1,104 @@
+.promo {
+    background-color: #DDDEE3;
+    width: 100%;
+    height: 560px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.promo__title {
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 52px;
+    letter-spacing: -0.04em;
+    color: #000000;
+    align-self: flex-start;
+    margin-left: 70px;
+    margin-top: 50px;
+    width: 626px;
+}
+
+.promo__logo {
+    border-style: none;
+    width: 722px;
+    height: 244px;
+    margin-top: 102px;
+    margin-bottom: 60px;
+    margin-right: 70px;
+    align-self: flex-end;
+}
+
+@media screen and (max-width: 769px) and (min-width: 420px) {
+    .promo {
+        max-width: 100vw;
+        height: 844px;
+        align-items: center;
+    }
+
+    .promo__title {
+        font-family: Inter, Arial, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 52px;
+        letter-spacing: -0.04em;
+        color: #000000;
+        align-self: center;
+        text-align: center;
+        width: 680px;
+        margin: 0;
+        margin-top: 300px;
+        max-width: 100%;
+    }
+
+    .promo__logo {
+        border-style: none;
+        max-width: 100%;
+        object-fit: cover;
+        height: 244px;
+        margin: 0;
+        margin-top: 140px;
+        margin-bottom: 70px;
+        align-self: center;
+    }
+
+}
+
+@media screen and (max-width: 420px) and (min-width: 310px) {
+    .promo {
+        align-items: center;
+        max-width: 100vw;
+        height: 630px;
+    }
+
+    .promo__title {
+        font-family: Inter, Arial, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 31px;
+        line-height: 39px;
+        text-align: center;
+        letter-spacing: -0.04em;
+
+        align-self: center;
+        text-align: center;
+        width: 300px;
+        margin: 0;
+        margin-top: 183px;
+        max-width: 100%;
+    }
+
+    .promo__logo {
+        max-width: 100%;
+        object-fit: cover;
+        height: 230px;
+        margin: 0;
+        margin-top: 60px;
+        margin-bottom: 40px;
+        align-self: center;
+    }
+
+}
