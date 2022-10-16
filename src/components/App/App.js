@@ -11,7 +11,7 @@ import Movies from '../Movies/Movies';
 import PopupMenu from '../PopupMenu/PopupMenu';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
 function App() {
   const [isOpenMenu, setOpenMenu] = React.useState(false);
@@ -23,46 +23,54 @@ function App() {
     setOpenMenu(false);
   }
 
-  const [isLogedIn, setLoggedIn] = React.useState(true); // меняем в ручную, чтобы посмотреть вёрстку
+  // const [isLogedIn, setLoggedIn] = React.useState(false);
 
-  const history = useHistory();
-  const currentPath = history.location.pathname;
+  //const history = useHistory();
+  const location = useLocation();
+  const currentLocation = location.pathname;
 
   return (
     <div className='page'>
-      {isLogedIn && <Header handleMenuClick={handleMenuClick} />}
-      <Switch>
-        <Route exact path='/'>
-          <Main />
-        </Route>
-        <Route path='/profile'>
-          <Profile />
-        </Route>
+      {(currentLocation === '/' ||
+        currentLocation === '/movies' ||
+        currentLocation === '/saved-movies' ||
+        currentLocation === '/profile') && (
+        <Header handleMenuClick={handleMenuClick} />
+      )}
+      <main>
+        <Switch>
+          <Route exact path='/'>
+            <Main />
+          </Route>
+          <Route path='/profile'>
+            <Profile />
+          </Route>
 
-        <Route path='/movies'>
-          <Movies />
-        </Route>
-        <Route path='/saved-movies'>
-          <Movies />
-        </Route>
+          <Route path='/movies'>
+            <Movies />
+          </Route>
+          <Route path='/saved-movies'>
+            <Movies />
+          </Route>
 
-        <Route path='/sign-up'>
-          <Register />
-        </Route>
-        <Route path='/sign-in'>
-          <Login />
-        </Route>
-        <Route path='*'>
-          <PageNotFound />
-        </Route>
-        <Route>
-          {/* {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />} */}
-        </Route>
-      </Switch>
-      {(currentPath === '/' ||
-        currentPath === '/movies' ||
-        currentPath === '/saved-movies') && <Footer />}
-      <PopupMenu handleCloseMenu={closeAllPopups} isOpenMenu={isOpenMenu} />
+          <Route path='/sign-up'>
+            <Register />
+          </Route>
+          <Route path='/sign-in'>
+            <Login />
+          </Route>
+          <Route path='*'>
+            <PageNotFound />
+          </Route>
+          <Route>
+            {/* {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />} */}
+          </Route>
+        </Switch>
+        <PopupMenu handleCloseMenu={closeAllPopups} isOpenMenu={isOpenMenu} />
+      </main>
+      {(currentLocation === '/' ||
+        currentLocation === '/movies' ||
+        currentLocation === '/saved-movies') && <Footer />}
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { portfolioData } from '../../contexts/Portfolio';
 import TitleBlock from '../TitleBlock/TitleBlock';
 import PortfolioLink from './PortfolioLink/PortfolioLink';
@@ -7,7 +6,7 @@ import photoStudent from './../../images/photoStudient.jpg';
 
 export default function AboutMe({ title }) {
   return (
-    <div className='about-me'>
+    <section className='about-me'>
       <TitleBlock title={title} />
       <div className='student'>
         <div className='student__about'>
@@ -22,12 +21,14 @@ export default function AboutMe({ title }) {
             санкции и вот это вот всё, начал заниматься фриланс-заказами по
             веб-разработке, а затем ушёл с постоянной работы.
           </p>
-          <Link
+          <a
+            target='_blank'
             className='student__link'
-            path='https://github.com/vlad-borovkov'
+            href='https://github.com/vlad-borovkov'
+            rel='noreferrer'
           >
             GitHub
-          </Link>
+          </a>
         </div>
         <img
           src={photoStudent}
@@ -37,10 +38,12 @@ export default function AboutMe({ title }) {
       </div>
       <div className='portfolio'>
         <p className='portfolio__lable'>Портфолио</p>
-        {portfolioData.map((item, index) => (
-          <PortfolioLink key={index} name={item.project} link={item.link} />
-        ))}
+        <ul className='portfolio__list'>
+          {portfolioData.map((item, index) => (
+            <PortfolioLink key={index} name={item.project} link={item.link} />
+          ))}
+        </ul>
       </div>
-    </div>
+    </section>
   );
 }

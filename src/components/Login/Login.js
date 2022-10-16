@@ -1,5 +1,6 @@
 import React from 'react';
 import EntryUserForm from '../EntryUserForm/EntryUserForm';
+import { useHistory } from 'react-router-dom';
 // import * as auth from '../Auth.js'
 
 const Login = (props) => {
@@ -20,6 +21,9 @@ const Login = (props) => {
       password: passwordInput,
     });
   }
+
+  let history = useHistory();
+  let currentPath = history.location.pathname;
 
   return (
     <EntryUserForm

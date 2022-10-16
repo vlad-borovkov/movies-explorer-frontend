@@ -107,7 +107,15 @@
 
 .menu__account_btn_user-set {
     margin: 0;
+    text-decoration: none;
+    color: #000000;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
 }
+
 
 @media screen and (max-width: 769px) and (min-width: 420px) {
     .header__logo {
@@ -141,6 +149,10 @@
         display: none;
     }
 
+    .menu__account_btn-mobile {
+        margin-bottom: 90px;
+    }
+
 }
 
 @media screen and (max-width: 420px) and (min-width: 310px) {
@@ -168,5 +180,8 @@
         margin-right: 14px;
     }
 
+    .menu__account_btn-mobile {
+        margin-bottom: 46px;
+    }
 
 }

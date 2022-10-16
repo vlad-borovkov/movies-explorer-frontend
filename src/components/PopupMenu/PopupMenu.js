@@ -14,18 +14,30 @@ const PopupMenu = ({ isOpenMenu, handleCloseMenu }) => {
       <div className='popup-menu__container'>
         <div className='popup-menu__menu'>
           <div className='popup-menu__links'>
-            <p className='popup-menu__links-item'>Главная</p>
-            <p className='popup-menu__links-item'>Фильмы</p>
-            <p className='popup-menu__links-item'>Сохранённые фильмы</p>
+            <Link to='/' className='popup-menu__links-item'>
+              Главная
+            </Link>
+            <Link to='/movies' className='popup-menu__links-item'>
+              Фильмы
+            </Link>
+            <Link to='/saved-movies' className='popup-menu__links-item'>
+              Сохранённые фильмы
+            </Link>
           </div>
 
-          <Link className='menu__account_btn' path='#'>
+          <Link
+            to='/profile'
+            className='menu__account_btn menu__account_btn-mobile'
+            path='#'
+          >
             <img
               className='menu__account_btn_user-logo'
               src={accountBtn}
               alt='кнопка аккаунта'
             ></img>
-            <p className='menu__account_btn_user-set'>Аккаунт</p>
+            <Link to='/profile' className='menu__account_btn_user-set '>
+              Аккаунт
+            </Link>
           </Link>
         </div>
       </div>

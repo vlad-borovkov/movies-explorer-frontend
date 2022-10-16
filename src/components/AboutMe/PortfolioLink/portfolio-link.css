@@ -1,7 +1,6 @@
 .portfolio-link__wrap {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     height: 70px;
     border-bottom: 1px solid #E8E8E8;
     align-items: center;
@@ -9,6 +8,7 @@
 
 .portfolio-link__path {
     margin: 0;
+    display: flex;
     font-family: Inter, Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -17,6 +17,14 @@
     letter-spacing: -0.04em;
     color: #000000;
     text-decoration: none;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.portfolio__list {
+    margin: 0;
+    padding: 0;
 }
 
 @media screen and (max-width: 769px) and (min-width: 420px) {

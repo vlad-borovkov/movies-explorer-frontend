@@ -23,9 +23,12 @@
     justify-content: center;
     margin-left: 70px;
     margin-right: 70px;
+    grid-template-areas:
+        "title_step title_week"
+        "ph_step ph_week";
 }
 
-.grid-table__title {
+.grid-table__title_step {
     margin: 0;
     font-family: Inter, Arial, sans-serif;
     font-style: normal;
@@ -36,9 +39,24 @@
     color: #000000;
     width: 550px;
     max-width: 100%;
+    grid-area: title_step;
 }
 
-.grid-table__ph {
+.grid-table__title_week {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    color: #000000;
+    width: 550px;
+    max-width: 100%;
+    grid-area: title_week;
+}
+
+.grid-table__ph_step {
     margin: 0;
     font-family: Inter, Arial, sans-serif;
     font-family: 'Inter';
@@ -47,6 +65,19 @@
     font-size: 14px;
     line-height: 20px;
     color: #000000;
+    grid-area: ph_step;
+}
+
+.grid-table__ph_week {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+    grid-area: ph_week;
 }
 
 .grid-graph {
@@ -162,6 +193,12 @@
 
     .grid-table {
         margin-top: 60px;
+        grid-template-columns: 284px;
+        grid-template-areas:
+            "title_step"
+            "ph_step"
+            "title_week"
+            "ph_week";
     }
 
     .grid-graph__first-num_blue {
@@ -190,7 +227,7 @@
         font-size: 11px;
         line-height: 13px;
         text-align: center;
-        width: 184px;
+
         max-width: 100%;
     }
 
@@ -201,7 +238,7 @@
         line-height: 13px;
         text-align: center;
         color: #000000;
-        width: 184px;
+
         max-width: 100%;
     }
 }

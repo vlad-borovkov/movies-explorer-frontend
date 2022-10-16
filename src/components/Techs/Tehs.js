@@ -6,7 +6,7 @@ import { myStack } from '../../contexts/Stack';
 export default function Tehs({ title }) {
   return (
     <>
-      <div className='techs'>
+      <section className='techs'>
         <TitleBlock title={title} />
         <div className='techs__text-wrap'>
           <h2 className='section-title'>7 технологий</h2>
@@ -20,7 +20,7 @@ export default function Tehs({ title }) {
             <StackCard key={index} stack={item} />
           ))}
         </ul>
-      </div>
+      </section>
     </>
   );
 }

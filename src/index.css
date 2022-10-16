@@ -26,6 +26,7 @@
 
 @import url(./components/MoviesCardList/movie-card-list.css);
 @import url(./components/MovieCard/movie-card.css);
+@import url(./components/MovieCardButton/movie-card-button.css);
 @import url(./components/AddMoviesBtn/add-movies-btn.css);
 
 @import url(./components/Profile/profile.css);

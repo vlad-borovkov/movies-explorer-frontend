@@ -1,21 +1,32 @@
 import React from 'react';
 import logoHeader from './../../images/logoHeader.svg';
 import Navigation from '../Navigation/Navigation';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const Header = ({ handleMenuClick }) => {
+  const location = useLocation();
+  const currentPath = location.pathname;
   const history = useHistory();
-  const currentPath = history.location.pathname;
-  // console.log(history.location.pathname === '/movies' && '/saved-movies');
+  const handleGoHome = () => {
+    history.push('/');
+  };
+
   return (
     <header
       className={`header ${
-        currentPath === '/movies' || currentPath === '/saved-movies'
+        currentPath === '/movies' ||
+        currentPath === '/saved-movies' ||
+        currentPath === '/profile'
           ? 'header_movies'
           : ''
-      } ${currentPath === '/profile' ? 'header_off' : ''}`}
+      }`}
     >
-      <img className='header__logo' src={logoHeader} alt='логотип'></img>
+      <img
+        className='header__logo'
+        src={logoHeader}
+        alt='логотип'
+        onClick={handleGoHome}
+      ></img>
       <Navigation handleMenuClick={handleMenuClick} />
     </header>
   );

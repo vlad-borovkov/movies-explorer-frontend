@@ -4,7 +4,7 @@ import searchButton from './../../images/searchButton.svg';
 
 export default function SearchForm() {
   return (
-    <div className='search-form'>
+    <section className='search-form'>
       <form className='search-form__form' id='search-movies'>
         <div className='form_wrap'>
           <input
@@ -29,6 +29,6 @@ export default function SearchForm() {
         </div>
       </form>
       <FilterCheckbox />
-    </div>
+    </section>
   );
 }

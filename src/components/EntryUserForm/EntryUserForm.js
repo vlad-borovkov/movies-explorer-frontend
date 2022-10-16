@@ -4,7 +4,7 @@ import logoHeader from './../../images/logoHeader.svg';
 
 const EntryUserForm = (props) => {
   return (
-    <div
+    <section
       className={`entry-user entry-user_type_${props.name} ${
         props.isOpen ? 'entry-user_on' : ''
       }`}
@@ -50,7 +50,7 @@ const EntryUserForm = (props) => {
           </p>
         </Route>
       </div>
-    </div>
+    </section>
   );
 };
 export default EntryUserForm;
