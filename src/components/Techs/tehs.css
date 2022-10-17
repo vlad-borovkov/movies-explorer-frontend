@@ -1,0 +1,120 @@
+.techs {
+    background-color: #F5F5F5;
+    max-width: 100vw;
+    height: 625px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+.techs__text-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-title {
+    font-family: Inter, Arial, sans-serif;
+
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    margin-top: 90px;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    /* identical to box height, or 116% */
+    letter-spacing: -0.04em;
+    color: #000000;
+}
+
+.section-subtitle {
+    font-family: Inter, Arial, sans-serif;
+
+    padding: 0;
+    margin: 0;
+    margin-top: 26px;
+    text-align: center;
+    line-height: 34px;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.04em;
+    color: #000000;
+
+}
+
+.my-stack {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+@media screen and (max-width: 769px) and (min-width: 420px) {
+    .techs {
+        padding-left: 60px;
+        padding-right: 60px;
+        height: 567px;
+    }
+
+}
+
+@media screen and (max-width: 750px) and (min-width: 420px) {
+
+    .my-stack {
+        flex-wrap: wrap;
+    }
+
+    .techs {
+        padding-left: 18px;
+        padding-right: 18px;
+        height: 651px;
+    }
+}
+
+@media screen and (max-width: 420px) and (min-width: 310px) {
+    .techs {
+        padding-left: 18px;
+        padding-right: 18px;
+        height: 651px;
+        background-color: #FAFAFA;
+    }
+
+    .section-title {
+        font-family: Inter, Arial, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 36px;
+        text-align: center;
+        letter-spacing: -0.04em;
+        color: #000000;
+        margin-top: 60px;
+    }
+
+    .section-subtitle {
+        font-family: Inter, Arial, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 16px;
+        text-align: center;
+        letter-spacing: -0.04em;
+        margin-top: 24px;
+    }
+
+    .my-stack {
+        margin-top: 50px;
+        flex-wrap: wrap;
+        width: 188px;
+        justify-content: flex-start;
+    }
+}

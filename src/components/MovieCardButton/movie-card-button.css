@@ -1,0 +1,27 @@
+.movie-card__save-btn {
+    margin-top: 18px;
+    background: transparent;
+    border: none;
+    border-radius: 31px;
+    width: 103px;
+    display: flex;
+    justify-content: center;
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 11px;
+    color: #000000;
+}
+
+@media screen and (max-width: 420px) and (min-width: 310px) {
+    .movie-card__save-btn {
+        margin-top: 14px;
+        font-family: Inter, Arial, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 11px;
+        color: #000000;
+    }
+}

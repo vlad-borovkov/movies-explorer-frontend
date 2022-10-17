@@ -1,0 +1,80 @@
+.movie-list-section {
+    margin: 0;
+    background-color: #FAFAFA;
+    max-width: 100vw;
+    min-height: 479px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top: 70px;
+}
+
+.movie-list {
+    width: 1136px;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    padding-bottom: 30px;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 360px);
+    row-gap: 32px;
+    column-gap: 20px;
+}
+
+
+
+@media screen and (max-width: 880px) and (min-width: 769px) {
+    .movie-list-section {
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-top: 70px;
+    }
+
+    .movie-list {
+        grid-template-columns: repeat(auto-fit, 342px);
+        padding-bottom: 30px;
+    }
+}
+
+
+@media screen and (max-width: 769px) and (min-width: 420px) {
+    .movie-list-section {
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-top: 70px;
+    }
+
+    .movie-list {
+        width: 1136px;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+        padding-bottom: 30px;
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, 333px);
+        row-gap: 32px;
+        column-gap: 24px;
+    }
+
+
+}
+
+@media screen and (max-width: 420px) and (min-width: 310px) {
+    .movie-list-section {
+        padding-top: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .movie-list {
+        grid-template-columns: repeat(auto-fit, 300px);
+        row-gap: 16px;
+        column-gap: 0;
+        padding-bottom: 30px;
+    }
+
+}

@@ -1,0 +1,187 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 74px;
+    background-color: #DDDEE3;
+    justify-content: space-between;
+}
+
+.header_off {
+    display: none;
+}
+
+.header_movies {
+    background-color: #FAFAFA;
+}
+
+.header__logo {
+    margin-left: 70px;
+    width: 38px;
+    height: 38px;
+}
+
+.header__menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 400px;
+    margin-right: 70px;
+    align-items: center;
+}
+
+.header__menu_movies {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 400px;
+    margin-right: 70px;
+    align-items: center;
+}
+
+.header__sandwitch-menu {
+    display: none;
+}
+
+.menu {
+    margin-right: 50px;
+}
+
+.menu__link {
+    margin-left: 20px;
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.menu__link_bold {
+    font-weight: 500;
+}
+
+.menu__sign-in_btn {
+    width: 76px;
+    height: 32px;
+    background-color: #3456F3;
+    color: white;
+    border-radius: 3px;
+    border: 0;
+    font-style: normal;
+    font-family: Inter, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.menu__account_btn {
+    display: flex;
+    width: 100px;
+    height: 32px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 2px solid rgba(170, 170, 170, 0.2);
+    border-radius: 50px;
+
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+}
+
+.menu__account_btn_user-logo {
+    width: 9px;
+    height: 12px;
+    margin-right: 7px;
+}
+
+.menu__account_btn_user-set {
+    margin: 0;
+    text-decoration: none;
+    color: #000000;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+
+@media screen and (max-width: 769px) and (min-width: 420px) {
+    .header__logo {
+        margin-left: 30px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .header__menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        max-width: 400px;
+        margin-right: 30px;
+        align-items: center;
+    }
+
+    .header__sandwitch-menu {
+        display: block;
+        cursor: pointer;
+        margin-left: auto;
+        margin-right: 30px;
+    }
+
+    .header_movies {
+        background-color: #FAFAFA;
+
+    }
+
+    .header__menu_movies {
+        display: none;
+    }
+
+    .menu__account_btn-mobile {
+        margin-bottom: 90px;
+    }
+
+}
+
+@media screen and (max-width: 420px) and (min-width: 310px) {
+    .header__menu_movies {
+        display: none;
+    }
+
+    .header__sandwitch-menu {
+        display: block;
+        margin-left: auto;
+        margin-right: 14px;
+    }
+
+    .header__logo {
+        margin-left: 14px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .header__menu {
+        margin-right: 14px;
+    }
+
+    .menu {
+        margin-right: 14px;
+    }
+
+    .menu__account_btn-mobile {
+        margin-bottom: 46px;
+    }
+
+}
