@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 import './../../index.css';
 import Main from '../Main/Main';
@@ -11,7 +10,8 @@ import Movies from '../Movies/Movies';
 import PopupMenu from '../PopupMenu/PopupMenu';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute';
+import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 
 function App() {
   const [isOpenMenu, setOpenMenu] = React.useState(false);
@@ -23,9 +23,44 @@ function App() {
     setOpenMenu(false);
   }
 
-  // const [isLogedIn, setLoggedIn] = React.useState(false);
+  //стейт авторизации
+  const [isLogedIn, setLoggedIn] = React.useState(localStorage.token || false);
+  const setLogginStatus = (token) => {
+    setLoggedIn(token);
+  };
+  console.log(isLogedIn);
 
-  //const history = useHistory();
+  //получаем глобальный стейт информации пользователя и рендерим КОГДА АВТОРИЗОВАН!
+  // const [currentUser, setCurrentUser] = React.useState([]);
+  // React.useEffect(() => {
+  //   if (loggedIn) {
+  //     api
+  //       .getUserValue()
+  //       .then((res) => {
+  //         setCurrentUser(res.user);
+  //       })
+  //       .catch((err) => {
+  //         console.log(`Упс, ошибка ${err}`);
+  //       });
+  //   }
+  // }, [loggedIn]);
+  // //получаем массив начальных карточек и рендерим
+  // const [cards, setPlaceCards] = React.useState([]);
+  // React.useEffect(() => {
+  //   if (loggedIn) {
+  //     api
+  //       .getCardsFromServer()
+  //       .then((res) => {
+  //         //console.log(res.cards);
+  //         setPlaceCards(res.cards);
+  //       })
+  //       .catch((err) => {
+  //         console.log(`Упс, ошибка ${err}`);
+  //       });
+  //   }
+  // }, [loggedIn]);
+
+  // const history = useHistory();
   const location = useLocation();
   const currentLocation = location.pathname;
 
@@ -39,32 +74,38 @@ function App() {
       )}
       <main>
         <Switch>
-          <Route exact path='/'>
-            <Main />
+          <Route>
+            <Main exact path='/' />
           </Route>
-          <Route path='/profile'>
-            <Profile />
-          </Route>
+          {/* <ProtectedRoute
+            path='/profile'
+            component={Profile}
+            loggedIn={isLogedIn}
+          />
 
-          <Route path='/movies'>
-            <Movies />
-          </Route>
-          <Route path='/saved-movies'>
-            <Movies />
-          </Route>
+          <ProtectedRoute
+            path='/movies'
+            component={Movies}
+            loggedIn={isLogedIn}
+          />
 
+          <ProtectedRoute
+            path='/saved-movies'
+            component={Movies}
+            loggedIn={isLogedIn}
+          /> */}
           <Route path='/sign-up'>
             <Register />
           </Route>
           <Route path='/sign-in'>
-            <Login />
+            <Login setLogginStatus={setLogginStatus} />
           </Route>
           <Route path='*'>
             <PageNotFound />
           </Route>
-          <Route>
-            {/* {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />} */}
-          </Route>
+          {/* <Route>
+            {isLogedIn ? <Redirect to='/movies' /> : <Redirect to='/sign-in' />}
+          </Route> */}
         </Switch>
         <PopupMenu handleCloseMenu={closeAllPopups} isOpenMenu={isOpenMenu} />
       </main>

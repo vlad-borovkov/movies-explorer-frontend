@@ -1,62 +1,104 @@
 import React from 'react';
 import EntryUserForm from '../EntryUserForm/EntryUserForm';
 import { useHistory } from 'react-router-dom';
-// import * as auth from '../Auth.js'
+import * as auth from '../../utils/Auth.js';
+import { useForm } from 'react-hook-form';
 
-const Login = (props) => {
-  const [emailInput, setEmailInput] = React.useState('');
-  function handleEmailChange(e) {
-    setEmailInput(e.target.value);
-  }
-  const [passwordInput, setPasswordInput] = React.useState('');
-  function handlePasswordChange(e) {
-    setPasswordInput(e.target.value);
-  }
+const Login = ({ isLoginOpen, setLogginStatus }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ mode: 'onChange' });
 
-  function handlerSubmitLogin(e) {
-    e.preventDefault();
+  // принимаем ошибку с сервера
+  const [errorMessageServer, setErrorMessageServer] = React.useState('');
+  const resetErrorMessageFromServer = () => {
+    setErrorMessageServer('');
+  };
 
-    props.onUpdater({
-      email: emailInput,
-      password: passwordInput,
-    });
-  }
+  // авторизация через сервер, получение jwt, редирект на защищённый роут /movies
+  const handlerSubmitLogin = (data) => {
+    console.log(data);
+    auth
+      .authorize(data)
+      .then((data) => {
+        if (data.message) {
+          setErrorMessageServer(data.message);
+        }
+        return data;
+      })
+      .then((data) => {
+        if (data) {
+          localStorage.setItem('jwt', data.token);
+          return data;
+        }
+      })
+      .then((data) => {
+        if (data.token) {
+          setLogginStatus(); //прокидываем функцию на изменение стейта авторизации в app
+        }
+      })
+      .then(() => history.push('/movies'))
+      .catch((err) => {
+        console.log(`Упс, ошибка ${err}`);
+      });
+  };
 
   let history = useHistory();
-  let currentPath = history.location.pathname;
 
   return (
     <EntryUserForm
       name='login'
       title='Рады видеть!'
       buttonOnText='Войти'
-      onSubmit={handlerSubmitLogin}
-      isLoginOpen={props.isLoginOpen}
+      onSubmit={handleSubmit(handlerSubmitLogin)}
+      isLoginOpen={isLoginOpen}
+      isValid={isValid}
     >
       <input
-        onChange={handleEmailChange}
-        value={emailInput || ''}
-        id='email-input'
+        {...register('email', {
+          required: 'Ввести E-mail обязательно',
+          minLength: {
+            value: 3,
+            message: 'Слишком короткий Email',
+          },
+          maxLength: {
+            value: 40,
+            message: 'Введено более 40 символов',
+          },
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Неверный E-mail',
+          },
+        })}
         className='entry-user__container-form-input_email'
-        type='email'
-        name='email'
         placeholder='Email'
-        minLength='3'
-        maxLength='40'
-        required
+        onClick={resetErrorMessageFromServer}
       />
       <input
-        onChange={handlePasswordChange}
-        value={passwordInput || ''}
-        id='password-input'
+        {...register('password', {
+          required: 'Пароль обязателен',
+          minLength: {
+            value: 6,
+            message: 'Пароль должен быть от 6 символов',
+          },
+          maxLength: {
+            value: 30,
+            message: 'Пароль должен быть до 30 символов',
+          },
+        })}
         className='entry-user__container-form-input_password'
         type='password'
-        name='password'
         placeholder='Пароль'
-        minLength='6'
-        maxLength='50'
-        required
+        onClick={resetErrorMessageFromServer}
       />
+      <span className='entry-user__container-form-error'>
+        {errors?.name?.message ||
+          errors?.email?.message ||
+          errors?.password?.message ||
+          errorMessageServer}
+      </span>
     </EntryUserForm>
   );
 };

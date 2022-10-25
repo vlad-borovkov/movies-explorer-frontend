@@ -42,6 +42,7 @@
     flex-direction: column;
     align-items: flex-start;
     cursor: default;
+    position: relative;
 }
 
 .entry-user__container-form-input_name {
@@ -122,6 +123,9 @@
     font-size: 10px;
     line-height: 12px;
     color: #EE3465;
+    position: absolute;
+    bottom: 102px;
+    left: 2px;
 }
 
 .entry-user__container-form-submit-button {
@@ -143,9 +147,11 @@
 
 .entry-user__container-form-submit-button:hover {
     cursor: pointer;
-    opacity: 0.85;
 }
 
+.entry-user__container-form-submit-button_disabled {
+    opacity: 0.5;
+}
 
 
 .entry-user_login-reminder {
