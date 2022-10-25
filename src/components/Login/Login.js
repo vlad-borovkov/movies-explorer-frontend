@@ -1,7 +1,8 @@
 import React from 'react';
 import EntryUserForm from '../EntryUserForm/EntryUserForm';
 import { useHistory } from 'react-router-dom';
-import * as auth from '../../utils/Auth.js';
+import { mainApi } from '../../utils/MainApi';
+
 import { useForm } from 'react-hook-form';
 
 const Login = ({ isLoginOpen, setLogginStatus }) => {
@@ -19,8 +20,7 @@ const Login = ({ isLoginOpen, setLogginStatus }) => {
 
   // авторизация через сервер, получение jwt, редирект на защищённый роут /movies
   const handlerSubmitLogin = (data) => {
-    console.log(data);
-    auth
+    mainApi
       .authorize(data)
       .then((data) => {
         if (data.message) {
@@ -36,7 +36,7 @@ const Login = ({ isLoginOpen, setLogginStatus }) => {
       })
       .then((data) => {
         if (data.token) {
-          setLogginStatus(); //прокидываем функцию на изменение стейта авторизации в app
+          setLogginStatus(data.token); //прокидываем функцию на изменение стейта авторизации в app
         }
       })
       .then(() => history.push('/movies'))

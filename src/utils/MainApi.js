@@ -1,5 +1,5 @@
-class Api {
-  constructor({ domain, token }) {
+class MainApi {
+  constructor({ domain }) {
     this._domain = domain;
   }
 
@@ -7,7 +7,7 @@ class Api {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`${res.status} - ${res.statusText}`);
+    return Promise.reject(`${res.status} - ${res.message}`);
   }
 
   makeRequest(url, method = 'GET', body) {
@@ -17,13 +17,23 @@ class Api {
     return fetch(requestUrl, {
       method: method,
       headers: {
-        Authorization: `Bearer ${jwt}`,
+        Authorization: `Bearer ${jwt}`, // прокидываем в каждый запрос текущий jwt
         'Content-Type': 'application/json',
-        //Origin: "https://vmesto.insta.nomoredomains.sbs", // формируются автоматически браузером
-        //Host: "http://localhost:3000", //
       },
       body: JSON.stringify(body),
-    }).then(this._checkResponse);
+    }).then((response) => {
+      return response.json();
+    });
+  }
+
+  register(registerValue) {
+    const registerRoute = '/signup';
+    return this.makeRequest(registerRoute, 'POST', registerValue);
+  }
+
+  authorize(authValue) {
+    const authRoute = '/signin';
+    return this.makeRequest(authRoute, 'POST', authValue);
   }
 
   getUserValue() {
@@ -38,10 +48,7 @@ class Api {
 
   changeUserInfo(userValue) {
     const requestUrl = '/users/me';
-    const userData = userValue;
-
-    //передать объект на сервер
-    return this.makeRequest(requestUrl, 'PATCH', userData);
+    return this.makeRequest(requestUrl, 'PATCH', userValue);
   }
 
   changeAvatar(avatarUrl) {
@@ -75,6 +82,8 @@ class Api {
   }
 }
 
-export const api = new Api({
-  domain: 'http://158.160.13.244', // "api.mymovie.nomorepartiesxyz.ru"
+export const mainApi = new MainApi({
+  domain: 'http://api.mymovie.nomorepartiesxyz.ru', // "api.mymovie.nomorepartiesxyz.ru"
 });
+
+export const BASE_URL = 'http://api.mymovie.nomorepartiesxyz.ru'; // "api.mymovie.nomorepartiesxyz.ru"  158.160.13.244

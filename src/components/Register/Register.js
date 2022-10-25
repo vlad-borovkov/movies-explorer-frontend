@@ -1,7 +1,7 @@
 import React from 'react';
 import EntryUserForm from '../EntryUserForm/EntryUserForm';
 import { useHistory } from 'react-router-dom';
-import * as auth from '../../utils/Auth.js';
+import { mainApi } from '../../utils/MainApi';
 import { useForm } from 'react-hook-form';
 
 const Register = (props) => {
@@ -20,7 +20,7 @@ const Register = (props) => {
 
   const handlerSubmitRegister = (data) => {
     console.log(data);
-    auth
+    mainApi
       .register(data)
       .then((data) => {
         if (data.message) {
@@ -32,7 +32,6 @@ const Register = (props) => {
         if (data._id) {
           history.push('/sign-in');
           reset();
-          setErrorMessageServer('');
         }
       })
       .catch((err) => {

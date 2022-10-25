@@ -55,6 +55,7 @@
 
 .movie-card__image {
     width: 100%;
+    height: 200px;
 }
 
 .movie-card__save-btn {
@@ -81,12 +82,22 @@
         height: 309px;
     }
 
+    .movie-card__image {
+        width: 100%;
+        height: 190px;
+    }
+
 }
 
 @media screen and (max-width: 420px) and (min-width: 310px) {
     .movie-card {
         width: 300px;
         height: 271px;
+    }
+
+    .movie-card__image {
+        width: 100%;
+        height: 168px;
     }
 
     .movie-card__header {
