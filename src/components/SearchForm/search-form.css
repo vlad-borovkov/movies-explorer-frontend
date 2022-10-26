@@ -51,6 +51,10 @@
     align-items: center;
 }
 
+.form__submit_disabled {
+    opacity: 0.5;
+}
+
 .form__submit_image {}
 
 @media screen and (max-width: 769px) and (min-width: 420px) {

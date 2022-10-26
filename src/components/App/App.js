@@ -47,7 +47,7 @@ function App() {
     }
   }, [isLogedIn]);
 
-  // получаем массив фильмов и сохраняем в локал сторидж
+  // получаем массив фильмов и сохраняем в локал сторидж, перенести в компонент Movies.
   const [isMoviesFetched, setMoviesFetched] = React.useState(false);
   React.useEffect(() => {
     if (isLogedIn) {

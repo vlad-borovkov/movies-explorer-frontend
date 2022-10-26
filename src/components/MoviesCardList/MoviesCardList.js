@@ -5,10 +5,7 @@ import MovieCard from './../MovieCard/MovieCard';
 import Preloader from './../Preloader/Preloader';
 
 export default function MoviesCardList({ moviesFromStorage }) {
-  //отображение конкретного числа карточек, пагинация при нажатии на кнопку "еще", картинка в карточке.
-  console.log(moviesFromStorage);
-
-  const allMovies = moviesFromStorage;
+  //прилетает уже отфильтрованый по всем параметрам квери
 
   return (
     <section className='movie-list-section'>
