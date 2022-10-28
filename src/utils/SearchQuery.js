@@ -27,6 +27,20 @@ class SearchQuery {
       );
     }
   }
+
+  filterByScreenSize(filteredMoviesArray) {
+    this.filteredMoviesArray = filteredMoviesArray;
+    let cardQuantity = 0;
+
+    if (window.innerWidth >= 1280) {
+      cardQuantity = 13;
+    } else if (window.innerWidth >= 768 && window.innerWidth <= 1279) {
+      cardQuantity = 9;
+    } else if (window.innerWidth >= 320 && window.innerWidth <= 767) {
+      cardQuantity = 6;
+    }
+    return filteredMoviesArray.slice(0, cardQuantity);
+  }
 }
 
 export const searchQuery = new SearchQuery({});

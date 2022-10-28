@@ -21,10 +21,7 @@ const Movies = ({}) => {
       });
   }, []);
 
-  const makeSearch = (query, tumbler) => {
-    console.log(query, tumbler);
-  };
-  const [userMoviesArray, setUserMoviesArray] = React.useState([]);
+  const [userMoviesArray, setUserMoviesArray] = React.useState([]); //храним массив отфильтрованных фильмов
   // принимаем запрос от пользователя и фильтруем
   const hadleSubmitForm = (data) => {
     const tumblerValue = JSON.parse(localStorage.getItem('shortsIsOn')); // получили состояние тумблера
@@ -41,11 +38,13 @@ const Movies = ({}) => {
     setUserMoviesArray(JSON.parse(localStorage.getItem('userMovies')));
   };
 
-  console.log(userMoviesArray);
   return (
     <>
       <SearchForm queryForm={hadleSubmitForm} />
-      <MoviesCardList moviesIsFetching={isMoviesFetched} />
+      <MoviesCardList
+        moviesIsFetching={isMoviesFetched}
+        updatedUserMovies={userMoviesArray}
+      />
     </>
   );
 };
