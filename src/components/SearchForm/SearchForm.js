@@ -3,8 +3,8 @@ import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import searchButton from './../../images/searchButton.svg';
 import { useForm } from 'react-hook-form';
 
-export default function SearchForm({ queryFromForm, onUpdaterTumbler }) {
-  // передача значения после сабмита формы
+export default function SearchForm(props) {
+  const { queryForm } = props;
 
   //рендер запроса в строку из локального хранилища, чтобы при перезагрузке страницы
   const [renderQuery, setRenderQuery] = React.useState(
@@ -24,7 +24,7 @@ export default function SearchForm({ queryFromForm, onUpdaterTumbler }) {
   );
 
   const handleSubmitForm = (data) => {
-    queryFromForm(data);
+    queryForm(data);
   };
 
   return (
@@ -53,7 +53,7 @@ export default function SearchForm({ queryFromForm, onUpdaterTumbler }) {
           </button>
         </div>
       </form>
-      <FilterCheckbox onUpdaterTumbler={onUpdaterTumbler} />
+      <FilterCheckbox {...props} />
     </section>
   );
 }

@@ -47,24 +47,6 @@ function App() {
     }
   }, [isLogedIn]);
 
-  // получаем массив фильмов и сохраняем в локал сторидж, перенести в компонент Movies.
-  const [isMoviesFetched, setMoviesFetched] = React.useState(false);
-  React.useEffect(() => {
-    if (isLogedIn) {
-      moviesApi
-        .getMoviesFromServer()
-        .then((res) => {
-          localStorage.setItem('movies', JSON.stringify(res));
-        })
-        .then(() => {
-          setMoviesFetched(true);
-        })
-        .catch((err) => {
-          console.log(`Упс, ошибка ${err}`);
-        });
-    }
-  }, [isLogedIn]);
-
   // const history = useHistory();
   const location = useLocation();
   const currentLocation = location.pathname;
@@ -99,7 +81,6 @@ function App() {
               path='/movies'
               component={Movies}
               loggedIn={isLogedIn}
-              isMoviesFetched={isMoviesFetched}
             />
 
             <ProtectedRoute

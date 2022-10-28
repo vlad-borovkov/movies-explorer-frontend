@@ -4,30 +4,48 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { searchQuery } from '../../utils/SearchQuery';
 import { moviesApi } from '../../utils/MoviesApi';
 
-const Movies = ({ isMoviesFetched }) => {
-  // парсим из локал сторидж после того, как загрузиться в него
-  // const [moviesFromStorage, setMoviesFromStorage] = React.useState([]);
-  // React.useEffect(() => {
-  //   const parsedMovie = JSON.parse(localStorage.getItem('movies'));
-  //   setMoviesFromStorage(parsedMovie);
-  // }, [isMoviesFetched]);
+const Movies = ({}) => {
+  const [isMoviesFetched, setMoviesFetched] = React.useState(false); //для спинера
 
-  //прилетает валидный квери от формы, оно обрабатывается классом и делается запрос к api.
+  React.useEffect(() => {
+    moviesApi
+      .getMoviesFromServer()
+      .then((res) => {
+        localStorage.setItem('movies', JSON.stringify(res));
+      })
+      .then(() => {
+        setMoviesFetched(true);
+      })
+      .catch((err) => {
+        console.log(`Упс, ошибка ${err}`);
+      });
+  }, []);
 
-  const queryFromForm = (data) => {
-    console.log(data);
+  const makeSearch = (query, tumbler) => {
+    console.log(query, tumbler);
   };
-  const onUpdaterTumbler = (data) => {
-    console.log(data);
+  const [userMoviesArray, setUserMoviesArray] = React.useState([]);
+  // принимаем запрос от пользователя и фильтруем
+  const hadleSubmitForm = (data) => {
+    const tumblerValue = JSON.parse(localStorage.getItem('shortsIsOn')); // получили состояние тумблера
+    const allMoviesArray = JSON.parse(localStorage.getItem('movies')); // получили из сторидж все фильмы
+
+    const filteredArray = searchQuery.filterByQuery(
+      allMoviesArray,
+      data.movieQuery,
+      tumblerValue
+    );
+    //вернуть отфильтрованный массив значений в соответсвии со всеми условиями(запрос, тумблер)
+    localStorage.setItem('userMovies', JSON.stringify(filteredArray));
+
+    setUserMoviesArray(JSON.parse(localStorage.getItem('userMovies')));
   };
 
+  console.log(userMoviesArray);
   return (
     <>
-      <SearchForm
-        queryFromForm={queryFromForm}
-        onUpdaterTumbler={onUpdaterTumbler}
-      />
-      <MoviesCardList />
+      <SearchForm queryForm={hadleSubmitForm} />
+      <MoviesCardList moviesIsFetching={isMoviesFetched} />
     </>
   );
 };

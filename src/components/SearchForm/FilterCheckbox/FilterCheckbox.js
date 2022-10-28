@@ -1,17 +1,16 @@
 import React from 'react';
 
-export default function FilterCheckbox({ onUpdaterTumbler }) {
+export default function FilterCheckbox(props) {
   // ручка тумблера с логикой и сохранением стейта в локалсторидж
   const [shortsFilter, setShortsFilter] = React.useState(
     JSON.parse(localStorage.getItem('shortsIsOn') || false)
   );
+
   const handleShortsClick = () => {
     setShortsFilter(!shortsFilter);
   };
   localStorage.setItem('shortsIsOn', shortsFilter);
-  onUpdaterTumbler({
-    shortsIsOn: shortsFilter,
-  });
+
   return (
     <>
       <div className='filter'>
