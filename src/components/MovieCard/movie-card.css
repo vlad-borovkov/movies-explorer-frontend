@@ -74,6 +74,10 @@
     color: #000000;
 }
 
+.movie-card__save-btn:hover {
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.1);
+}
+
 .movie-card__save-btn_save {}
 
 @media screen and (max-width: 880px) and (min-width: 420px) {

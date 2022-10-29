@@ -47,6 +47,11 @@ function App() {
     }
   }, [isLogedIn]);
 
+  const [isSavedMoviesUpdate, setIsSavedMoviesUpdate] = React.useState(false);
+  const onUpdateSavedFilms = () => {
+    setIsSavedMoviesUpdate(!isSavedMoviesUpdate);
+  };
+
   // const history = useHistory();
   const location = useLocation();
   const currentLocation = location.pathname;
@@ -57,7 +62,10 @@ function App() {
           currentLocation === '/movies' ||
           currentLocation === '/saved-movies' ||
           currentLocation === '/profile') && (
-          <Header handleMenuClick={handleMenuClick} />
+          <Header
+            handleMenuClick={handleMenuClick}
+            onUpdateSavedFilms={() => onUpdateSavedFilms()}
+          />
         )}
         <main>
           <Switch>
@@ -87,6 +95,7 @@ function App() {
               path='/saved-movies'
               component={Movies}
               loggedIn={isLogedIn}
+              onUpdateSavedFilms={isSavedMoviesUpdate}
             />
 
             <Route path='*'>

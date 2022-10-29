@@ -4,20 +4,22 @@ import SavedButton from './../../images/savedButton.svg';
 import DeleteButton from './../../images/deleteButton.svg';
 import { Route } from 'react-router-dom';
 
-export default function MovieCardButton() {
-  const handleDeleteCard = () => {
-    console.log('меня удалили');
+export default function MovieCardButton({
+  cardItem,
+  onCardSave,
+  onCardDelete,
+  isSavedMovies,
+}) {
+  // const cardSavedClassName = `card__like-button ${
+  //   isSavedMovies ? 'card__like-button_active' : ''
+  // }`;
+
+  const handleSaveCard = () => {
+    onCardSave(cardItem);
   };
 
-  const [isSaveClicked, setSaveClicked] = React.useState(false);
-  const handleSavedCard = () => {
-    setSaveClicked(!isSaveClicked);
-
-    if (!isSaveClicked) {
-      console.log('Меня сохранили');
-    } else {
-      console.log('Меня удалили');
-    }
+  const handleDeleteCard = () => {
+    onCardDelete(cardItem);
   };
 
   return (
@@ -26,9 +28,9 @@ export default function MovieCardButton() {
         <button className='movie-card__save-btn'>
           <img
             className='movie-card__save-btn_save'
-            src={isSaveClicked ? SavedButton : SaveButton}
+            src={isSavedMovies ? SavedButton : SaveButton}
             alt='сохранить фильм'
-            onClick={handleSavedCard}
+            onClick={isSavedMovies ? handleDeleteCard : handleSaveCard}
           ></img>
         </button>
       </Route>

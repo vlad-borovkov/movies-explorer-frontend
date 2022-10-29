@@ -33,7 +33,7 @@ class SearchQuery {
     let cardQuantity = 0;
 
     if (window.innerWidth >= 1280) {
-      cardQuantity = 13;
+      cardQuantity = 12;
     } else if (window.innerWidth >= 768 && window.innerWidth <= 1279) {
       cardQuantity = 9;
     } else if (window.innerWidth >= 320 && window.innerWidth <= 767) {
@@ -44,11 +44,3 @@ class SearchQuery {
 }
 
 export const searchQuery = new SearchQuery({});
-
-// после ввода запроса и сабмита инпута поиска происходит 1.валидация, 2.запрос на ВСЕ фильмы и сохранение в локал сторидж, 3. фильтрация в зависимости от поиска, 4. передать в метод фильтрации отфильтровать filter() в зависимости от запроса(где принять и куда передать) 5. вернуть результаты в зависимости от ширины экрана 5. вывод карточек.  6. при клике на ешё показать еще, если нет еще фильмов, то не показывать. сделать класс с промисами?.
-// return this._allMoviesArray.filter(
-//   (item) =>
-//     (item.nameRU.toLowerCase().includes(queryValue.toLowerCase()) &&
-//       item.duration <= durationValue) ||
-//     (item.nameEN.toLowerCase().includes(queryValue.toLowerCase()) &&
-//       item.duration <= durationValue)

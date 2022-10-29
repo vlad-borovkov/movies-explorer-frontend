@@ -3,7 +3,9 @@ import logoHeader from './../../images/logoHeader.svg';
 import Navigation from '../Navigation/Navigation';
 import { useLocation, useHistory } from 'react-router-dom';
 
-const Header = ({ handleMenuClick }) => {
+const Header = (props) => {
+  const { handleMenuClick, onUpdateSavedFilms } = props;
+
   const location = useLocation();
   const currentPath = location.pathname;
   const history = useHistory();
@@ -27,7 +29,10 @@ const Header = ({ handleMenuClick }) => {
         alt='логотип'
         onClick={handleGoHome}
       ></img>
-      <Navigation handleMenuClick={handleMenuClick} />
+      <Navigation
+        handleMenuClick={handleMenuClick}
+        onUpdateSavedFilms={onUpdateSavedFilms}
+      />
     </header>
   );
 };

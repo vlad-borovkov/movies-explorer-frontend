@@ -19,6 +19,8 @@ class MainApi {
       headers: {
         Authorization: `Bearer ${jwt}`, // прокидываем в каждый запрос текущий jwt
         'Content-Type': 'application/json',
+        // Origin: 'https://localhost:3001', // формируются автоматически браузером
+        // Host: 'http://localhost:3000', //
       },
       body: JSON.stringify(body),
     }).then((response) => {
@@ -42,7 +44,7 @@ class MainApi {
   }
 
   getCardsFromServer() {
-    const cardsFromServer = '/cards';
+    const cardsFromServer = '/movies';
     return this.makeRequest(cardsFromServer);
   }
 
@@ -51,13 +53,8 @@ class MainApi {
     return this.makeRequest(requestUrl, 'PATCH', userValue);
   }
 
-  changeAvatar(avatarUrl) {
-    const requestUrl = '/users/me/avatar';
-    return this.makeRequest(requestUrl, 'PATCH', avatarUrl);
-  }
-
-  handlerAddCard(cardsData) {
-    const requestUrl = '/cards';
+  handlerAddMovies(cardsData) {
+    const requestUrl = '/movies';
     return this.makeRequest(requestUrl, 'POST', cardsData);
   }
 
@@ -77,7 +74,7 @@ class MainApi {
   }
 
   deleteCard(cardId) {
-    const requestUrl = `/cards/${cardId}`;
+    const requestUrl = `/movies/${cardId}`;
     return this.makeRequest(requestUrl, 'DELETE');
   }
 }

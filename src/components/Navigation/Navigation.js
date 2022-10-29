@@ -1,15 +1,18 @@
 import React from 'react';
-import { Route, Link, useHistory } from 'react-router-dom';
+import { Route, Link, useHistory, useLocation } from 'react-router-dom';
 
 import accountBtn from './../../images/account-btn.svg';
 import menuBtn from './../../images/sandwitchMenu.svg';
 
-const Navigation = ({ handleMenuClick }) => {
+const Navigation = ({ handleMenuClick, onUpdateSavedFilms }) => {
   const history = useHistory();
 
   const handleSignIn = () => {
     history.push('/sign-in');
   };
+
+  const location = useLocation();
+  const currentLocation = location.pathname;
 
   return (
     <>
@@ -39,10 +42,19 @@ const Navigation = ({ handleMenuClick }) => {
         </div>
         <div className='header__menu_movies'>
           <nav className='menu'>
-            <Link to='/movies' className='menu__link menu__link_bold'>
+            <Link
+              to='/movies'
+              className={`menu__link ${
+                currentLocation === '/movies' && 'menu__link_bold'
+              }`}
+            >
               Фильмы
             </Link>
-            <Link to='/saved-movies' className='menu__link'>
+            <Link
+              onClick={onUpdateSavedFilms}
+              to='/saved-movies'
+              className='menu__link'
+            >
               Сохранённые фильмы
             </Link>
           </nav>
@@ -66,10 +78,15 @@ const Navigation = ({ handleMenuClick }) => {
         </div>
         <div className='header__menu_movies'>
           <nav className='menu'>
-            <Link to='/movies' className='menu__link menu__link_bold'>
+            <Link to='/movies' className='menu__link'>
               Фильмы
             </Link>
-            <Link to='/saved-movies' className='menu__link'>
+            <Link
+              to='/saved-movies'
+              className={`menu__link ${
+                currentLocation === '/saved-movies' && 'menu__link_bold'
+              }`}
+            >
               Сохранённые фильмы
             </Link>
           </nav>
@@ -93,7 +110,7 @@ const Navigation = ({ handleMenuClick }) => {
         </div>
         <div className='header__menu_movies'>
           <nav className='menu'>
-            <Link to='/movies' className='menu__link menu__link_bold'>
+            <Link to='/movies' className='menu__link'>
               Фильмы
             </Link>
             <Link to='/saved-movies' className='menu__link'>

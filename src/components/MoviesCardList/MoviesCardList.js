@@ -4,9 +4,11 @@ import AddMoviesBtn from '../AddMoviesBtn/AddMoviesBtn';
 import MovieCard from './../MovieCard/MovieCard';
 import Preloader from './../Preloader/Preloader';
 import { searchQuery } from '../../utils/SearchQuery';
+import { mainApi } from '../../utils/MainApi';
 
 export default function MoviesCardList(props) {
-  const { moviesIsFetching, updatedUserMovies } = props;
+  const { moviesIsFetching, updatedUserMovies, savedUserMovies, cardIsUpdate } =
+    props;
 
   // определяем текущий размер окна, чтобы выдать пагинацию, удаляем слушатель после выхода с этой страницы
   const [currentPagination, setCurrentPagination] = React.useState({
@@ -78,22 +80,90 @@ export default function MoviesCardList(props) {
       setMoviesForRender(moviesForRender.concat([...moreMovies]));
     }
   };
-  //прилетает массив уже отфильтрованый по параметрам запросам. .сделать функцию, которая выдаёт количесвто карточек по ширине экрана, и управляет кнопкое "ЕЩЁ", которая выдаёт еще карточки, если они есть.
+
+  // передаём значения нажатых карточек
+  const handleSaveCard = (data) => {
+    console.log(data);
+    mainApi
+      .handlerAddMovies({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: `https://api.nomoreparties.co${data.image.url}`,
+        trailerLink: data.trailerLink,
+        thumbnail: `https://api.nomoreparties.co${data.image.formats.thumbnail.url}`,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+      })
+      .then((res) => cardIsUpdate())
+      .catch((err) => console.log(err.message));
+  };
+
+  const handleDeleteCard = (data) => {
+    const cardId = data._id;
+
+    if (cardId) {
+      mainApi
+        .deleteCard(cardId)
+        .then((res) => cardIsUpdate())
+        .catch((err) => console.log(err));
+    } else {
+      const localStorageCardId = data.id;
+      const cardForDelete = savedUserMovies.find(
+        (item) => item.movieId === localStorageCardId
+      );
+      console.log(cardForDelete);
+      mainApi
+        .deleteCard(cardForDelete._id)
+        .then((res) => cardIsUpdate())
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <section className='movie-list-section'>
-      {console.log(moviesForRender)}
-      {moviesIsFetching ? (
-        <ul className='movie-list'>
-          {moviesForRender.map((item) => (
-            <MovieCard key={item.id} cardItem={item} />
-          ))}
-        </ul>
-      ) : (
-        <Preloader />
-      )}
-      {moviesForPagination.length > moviesForRender.length && (
-        <AddMoviesBtn addMoreMovies={addMoreMovies} />
-      )}
+      <Route path='/movies'>
+        {console.log(moviesForRender)}
+        {moviesIsFetching ? (
+          <ul className='movie-list'>
+            {moviesForRender.map((item) => (
+              <MovieCard
+                key={item.id || item._id}
+                cardItem={item}
+                handleSaveCard={handleSaveCard}
+                handleDeleteCard={handleDeleteCard}
+                savedUserMovies={savedUserMovies}
+              />
+            ))}
+          </ul>
+        ) : (
+          <Preloader />
+        )}
+        {moviesForPagination.length > moviesForRender.length && (
+          <AddMoviesBtn addMoreMovies={addMoreMovies} />
+        )}
+      </Route>
+      <Route path='/saved-movies'>
+        {moviesIsFetching ? (
+          <ul className='movie-list'>
+            {/* {console.log(savedUserMovies)} */}
+            {savedUserMovies.map((item) => (
+              <MovieCard
+                key={item.id || item._id}
+                cardItem={item}
+                handleSaveCard={handleSaveCard}
+                handleDeleteCard={handleDeleteCard}
+                savedUserMovies={savedUserMovies}
+              />
+            ))}
+          </ul>
+        ) : (
+          <Preloader />
+        )}
+      </Route>
     </section>
   );
 }
