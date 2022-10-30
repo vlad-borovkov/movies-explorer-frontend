@@ -19,7 +19,6 @@ const Register = (props) => {
   } = useForm({ mode: 'onChange' });
 
   const handlerSubmitRegister = (data) => {
-    console.log(data);
     mainApi
       .register(data)
       .then((data) => {

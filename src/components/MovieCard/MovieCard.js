@@ -7,6 +7,7 @@ export default function MovieCard({
   cardItem,
   handleSaveCard,
   handleDeleteCard,
+  onCardClick,
   savedUserMovies,
 }) {
   //проверка на сохранение в массиве сохранённых пользователем фильмов
@@ -14,6 +15,10 @@ export default function MovieCard({
   const isSaved = savedUserMovies.some(
     (element) => element.movieId === cardItem.id
   );
+
+  const handleClickCard = () => {
+    onCardClick(cardItem);
+  };
 
   return (
     <li className='movie-card'>
@@ -26,6 +31,7 @@ export default function MovieCard({
           className='movie-card__image'
           src={`https://api.nomoreparties.co${cardItem.image.url}`}
           alt={cardItem.nameRU}
+          onClick={handleClickCard}
         ></img>
       </Route>
 
@@ -34,6 +40,7 @@ export default function MovieCard({
           className='movie-card__image'
           src={cardItem.image}
           alt={cardItem.nameRU}
+          onClick={handleClickCard}
         ></img>
       </Route>
 

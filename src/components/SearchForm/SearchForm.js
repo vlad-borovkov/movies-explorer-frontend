@@ -2,9 +2,10 @@ import React from 'react';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import searchButton from './../../images/searchButton.svg';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
 export default function SearchForm(props) {
-  const { queryForm } = props;
+  const { allMoviesQuery, savedMoviesQuery } = props;
 
   //рендер запроса в строку из локального хранилища, чтобы при перезагрузке страницы
   const [renderQuery, setRenderQuery] = React.useState(
@@ -23,8 +24,15 @@ export default function SearchForm(props) {
     { mode: 'onChange' }
   );
 
+  //разделяем поисковый запрос для разных массивов фильмов
+  const location = useLocation();
+  const currentPath = location.pathname;
   const handleSubmitForm = (data) => {
-    queryForm(data);
+    if (currentPath === '/movies') {
+      allMoviesQuery(data);
+    } else if (currentPath === '/saved-movies') {
+      savedMoviesQuery(data);
+    }
   };
 
   return (
@@ -37,7 +45,7 @@ export default function SearchForm(props) {
         <div className='form_wrap'>
           <input
             {...register('movieQuery', {
-              required: 'Ввести имя обязательно',
+              required: 'Ввести название фильма обязательно',
             })}
             className='form__input'
             placeholder='Фильм'

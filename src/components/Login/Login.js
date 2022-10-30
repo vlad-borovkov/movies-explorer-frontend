@@ -17,7 +17,7 @@ const Login = ({ isLoginOpen, setLogginStatus }) => {
   const resetErrorMessageFromServer = () => {
     setErrorMessageServer('');
   };
-
+  const history = useHistory();
   // авторизация через сервер, получение jwt, редирект на защищённый роут /movies
   const handlerSubmitLogin = (data) => {
     mainApi
@@ -29,23 +29,16 @@ const Login = ({ isLoginOpen, setLogginStatus }) => {
         return data;
       })
       .then((data) => {
-        if (data) {
-          localStorage.setItem('jwt', data.token);
-          return data;
-        }
-      })
-      .then((data) => {
         if (data.token) {
-          setLogginStatus(data.token); //прокидываем функцию на изменение стейта авторизации в app
+          localStorage.setItem('jwt', data.token);
+          setLogginStatus(); //прокидываем функцию на изменение стейта авторизации в app
+          history.push('/movies');
         }
       })
-      .then(() => history.push('/movies'))
       .catch((err) => {
         console.log(`Упс, ошибка ${err}`);
       });
   };
-
-  let history = useHistory();
 
   return (
     <EntryUserForm

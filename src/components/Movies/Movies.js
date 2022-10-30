@@ -21,8 +21,15 @@ const Movies = ({ onUpdateSavedFilms }) => {
         console.log(`Упс, ошибка ${err}`);
       });
   }, []);
-  const [userMoviesArray, setUserMoviesArray] = React.useState([]); //храним массив отфильтрованных фильмов
-  // принимаем запрос от пользователя и фильтруем
+
+  //состояние пустого массива всех фильмов для вывода сообщения
+  const [isEmptyAllMoviesArray, setIsEmptyAllMovies] = React.useState(Boolean);
+
+  // храним массив отфильтрованных фильмов
+  const [userMoviesArray, setUserMoviesArray] = React.useState(
+    JSON.parse(localStorage.getItem('userMovies')) || []
+  );
+  // принимаем запрос от пользователя и фильтруем все фильмы
   const hadleSubmitForm = (data) => {
     const tumblerValue = JSON.parse(localStorage.getItem('shortsIsOn')); // получили состояние тумблера
     const allMoviesArray = JSON.parse(localStorage.getItem('movies')); // получили из сторидж все фильмы
@@ -34,10 +41,31 @@ const Movies = ({ onUpdateSavedFilms }) => {
     //вернуть отфильтрованный массив значений в соответсвии со всеми условиями(запрос, тумблер)
     localStorage.setItem('userMovies', JSON.stringify(filteredArray));
     setUserMoviesArray(JSON.parse(localStorage.getItem('userMovies')));
+    if (filteredArray.length === 0) {
+      setIsEmptyAllMovies(true);
+    } else setIsEmptyAllMovies(false);
   };
 
+  const [isEmptySavedMoviesArray, setIsEmptySavedMovies] =
+    React.useState(Boolean);
   // получаем массив сохранённых пользователей фильмов из MainAp
-  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [savedMovies, setSavedMovies] = React.useState(
+    JSON.parse(localStorage.getItem('savedMoviesLocalStorage'))
+  );
+  // принимаем запрос и фильтруем сохранённые фильмы
+  const hadleSavedSubmitForm = (data) => {
+    const tumblerValue = JSON.parse(localStorage.getItem('shortsIsOn'));
+    const filteredArray = searchQuery.filterByQuery(
+      savedMovies,
+      data.movieQuery,
+      tumblerValue
+    );
+
+    setSavedMovies(filteredArray);
+    if (filteredArray.length === 0) {
+      setIsEmptySavedMovies(true);
+    } else setIsEmptySavedMovies(false);
+  };
 
   const [cardIsUpdate, setCardIsUpdate] = React.useState(false);
   const handleUpdateCard = () => {
@@ -48,18 +76,32 @@ const Movies = ({ onUpdateSavedFilms }) => {
   React.useEffect(() => {
     mainApi
       .getCardsFromServer()
-      .then((data) => setSavedMovies(data.movies))
+      .then((data) => {
+        localStorage.setItem(
+          'savedMoviesLocalStorage',
+          JSON.stringify(data.movies)
+        );
+        let savedMoviesLocalStorage = JSON.parse(
+          localStorage.getItem('savedMoviesLocalStorage')
+        );
+        setSavedMovies(savedMoviesLocalStorage);
+      })
       .catch((err) => console.log(err));
   }, [onUpdateSavedFilms, cardIsUpdate]);
 
   return (
     <>
-      <SearchForm queryForm={hadleSubmitForm} />
+      <SearchForm
+        allMoviesQuery={hadleSubmitForm}
+        savedMoviesQuery={hadleSavedSubmitForm}
+      />
       <MoviesCardList
         moviesIsFetching={isMoviesFetched}
         updatedUserMovies={userMoviesArray}
         savedUserMovies={savedMovies}
         cardIsUpdate={() => handleUpdateCard()}
+        isEmptyAllMoviesArray={isEmptyAllMoviesArray}
+        isEmptySavedMoviesArray={isEmptySavedMoviesArray}
       />
     </>
   );

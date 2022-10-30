@@ -28,7 +28,6 @@ const PopupMenu = ({ isOpenMenu, handleCloseMenu }) => {
           <Link
             to='/profile'
             className='menu__account_btn menu__account_btn-mobile'
-            path='#'
           >
             <img
               className='menu__account_btn_user-logo'

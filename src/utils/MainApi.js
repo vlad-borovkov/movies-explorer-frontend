@@ -58,21 +58,6 @@ class MainApi {
     return this.makeRequest(requestUrl, 'POST', cardsData);
   }
 
-  changeLikeCardStatus(cardId, islikedState) {
-    const requestUrl = `/cards/${cardId}/likes`;
-    return this.makeRequest(requestUrl, `${islikedState ? 'PUT' : 'DELETE'}`);
-  }
-
-  deleteLikeOnCard(cardId) {
-    const requestUrl = `/cards/${cardId}/likes`;
-    return this.makeRequest(requestUrl, 'DELETE');
-  }
-
-  addLikeOnCard(cardId) {
-    const requestUrl = `/cards/${cardId}/likes`;
-    return this.makeRequest(requestUrl, 'PUT');
-  }
-
   deleteCard(cardId) {
     const requestUrl = `/movies/${cardId}`;
     return this.makeRequest(requestUrl, 'DELETE');

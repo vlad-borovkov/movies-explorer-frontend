@@ -28,8 +28,14 @@ function App() {
 
   //стейт авторизации
   const [isLogedIn, setLoggedIn] = React.useState(localStorage.jwt || false);
-  const setLogginStatus = (token) => {
-    setLoggedIn(token);
+  const setLogginStatus = (value) => {
+    setLoggedIn(value);
+  };
+
+  // состояние обновления профиля
+  const [isProfileUpdate, setIsProfileUpdate] = React.useState(false);
+  const onUpdateProfile = () => {
+    setIsProfileUpdate(!isProfileUpdate);
   };
 
   //получаем глобальный стейт информации пользователя и передаём в контекст после авторизации.
@@ -45,7 +51,7 @@ function App() {
           console.log(`Упс, ошибка ${err}`);
         });
     }
-  }, [isLogedIn]);
+  }, [isLogedIn, isProfileUpdate]);
 
   const [isSavedMoviesUpdate, setIsSavedMoviesUpdate] = React.useState(false);
   const onUpdateSavedFilms = () => {
@@ -65,6 +71,7 @@ function App() {
           <Header
             handleMenuClick={handleMenuClick}
             onUpdateSavedFilms={() => onUpdateSavedFilms()}
+            loggedIn={isLogedIn}
           />
         )}
         <main>
@@ -76,13 +83,15 @@ function App() {
               <Register />
             </Route>
             <Route path='/sign-in'>
-              <Login setLogginStatus={setLogginStatus} />
+              <Login setLogginStatus={() => setLogginStatus(true)} />
             </Route>
 
             <ProtectedRoute
               path='/profile'
               component={Profile}
               loggedIn={isLogedIn}
+              onUpdateProfile={() => onUpdateProfile()}
+              onLogOutProfile={() => setLogginStatus(false)}
             />
 
             <ProtectedRoute

@@ -1,33 +1,31 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
-  const history = useHistory();
-  const currentPath = history.location.pathname;
-
   return (
-    <div
-      className='footer'
-      // ${
-      //   currentPath === '/profile' ||
-      //   currentPath === '/sign-up' ||
-      //   currentPath === '/sign-in'
-      //     ? 'footer_off'
-      //     : ''
-      // }`}
-    >
+    <div className='footer'>
       <div className='footer__about'>
         Учебный проект Яндекс.Практикум х BeatFilm.
       </div>
       <div className='footer__links-wrap'>
         <p className='footer__copyright'>&copy; 2022 by Vlad Borovkov</p>
         <div className='footer__links-container'>
-          <Link className='footer__link' path='/#'>
+          <a
+            target='_blank'
+            rel='noreferrer'
+            className='footer__link'
+            href='https://practicum.yandex.ru/'
+          >
             Яндекс.Практикум
-          </Link>
-          <Link className='footer__link' path='/#'>
+          </a>
+          <a
+            className='footer__link'
+            target='_blank'
+            rel='noreferrer'
+            href='https://github.com/vlad-borovkov'
+          >
             GitHub
-          </Link>
+          </a>
         </div>
       </div>
     </div>

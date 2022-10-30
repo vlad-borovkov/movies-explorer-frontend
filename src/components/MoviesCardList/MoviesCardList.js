@@ -7,8 +7,14 @@ import { searchQuery } from '../../utils/SearchQuery';
 import { mainApi } from '../../utils/MainApi';
 
 export default function MoviesCardList(props) {
-  const { moviesIsFetching, updatedUserMovies, savedUserMovies, cardIsUpdate } =
-    props;
+  const {
+    moviesIsFetching,
+    updatedUserMovies,
+    savedUserMovies,
+    cardIsUpdate,
+    isEmptyAllMoviesArray,
+    isEmptySavedMoviesArray,
+  } = props;
 
   // определяем текущий размер окна, чтобы выдать пагинацию, удаляем слушатель после выхода с этой страницы
   const [currentPagination, setCurrentPagination] = React.useState({
@@ -68,8 +74,6 @@ export default function MoviesCardList(props) {
     );
   }, [moviesForPagination]);
 
-  const fromStorageMovie = JSON.parse(localStorage.getItem('moviesForRender'));
-
   const addMoreMovies = () => {
     if (moviesForPagination.length > moviesForRender.length) {
       const [...moreMovies] = moviesForPagination.slice(
@@ -83,7 +87,6 @@ export default function MoviesCardList(props) {
 
   // передаём значения нажатых карточек
   const handleSaveCard = (data) => {
-    console.log(data);
     mainApi
       .handlerAddMovies({
         country: data.country,
@@ -115,7 +118,6 @@ export default function MoviesCardList(props) {
       const cardForDelete = savedUserMovies.find(
         (item) => item.movieId === localStorageCardId
       );
-      console.log(cardForDelete);
       mainApi
         .deleteCard(cardForDelete._id)
         .then((res) => cardIsUpdate())
@@ -123,10 +125,18 @@ export default function MoviesCardList(props) {
     }
   };
 
+  const handleClickCard = (data) => {
+    const trailerLink = data.trailerLink;
+    window.open(trailerLink, '_blank');
+  };
+
   return (
     <section className='movie-list-section'>
       <Route path='/movies'>
-        {console.log(moviesForRender)}
+        <p className='movie-list__message'>
+          {isEmptyAllMoviesArray &&
+            `Таких фильмов еще не придумали. Повторите другой запрос`}
+        </p>
         {moviesIsFetching ? (
           <ul className='movie-list'>
             {moviesForRender.map((item) => (
@@ -136,6 +146,7 @@ export default function MoviesCardList(props) {
                 handleSaveCard={handleSaveCard}
                 handleDeleteCard={handleDeleteCard}
                 savedUserMovies={savedUserMovies}
+                onCardClick={handleClickCard}
               />
             ))}
           </ul>
@@ -147,9 +158,11 @@ export default function MoviesCardList(props) {
         )}
       </Route>
       <Route path='/saved-movies'>
+        <p className='movie-list__message'>
+          {/* {savedUserMovies.length === 0 && `Здесь фильмы еще не живут.`} */}
+        </p>
         {moviesIsFetching ? (
           <ul className='movie-list'>
-            {/* {console.log(savedUserMovies)} */}
             {savedUserMovies.map((item) => (
               <MovieCard
                 key={item.id || item._id}
@@ -157,6 +170,7 @@ export default function MoviesCardList(props) {
                 handleSaveCard={handleSaveCard}
                 handleDeleteCard={handleDeleteCard}
                 savedUserMovies={savedUserMovies}
+                onCardClick={handleClickCard}
               />
             ))}
           </ul>

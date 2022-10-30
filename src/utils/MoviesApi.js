@@ -28,10 +28,3 @@ export const moviesApi = new MoviesApi({
 });
 
 export const BASE_URL = 'http://api.mymovie.nomorepartiesxyz.ru'; // "api.mymovie.nomorepartiesxyz.ru"  158.160.13.244
-
-// Такие данные карточки мы получаем в ответе BeatfilmMoviesApi:
-// название фильма на русском языке находится в свойстве nameRU;
-// изображение — в image.url;
-// Изображения приходят с сервера с относительным, а не абсолютным URL. Не забудьте добавить к ним URL сервера — https://api.nomoreparties.co/.
-// ссылка на трейлер — в trailerLink;
-// длительность короткометражного фильма рассчитывается на основе поля duration.

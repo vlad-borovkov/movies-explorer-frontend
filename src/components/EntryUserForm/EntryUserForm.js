@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, useHistory } from 'react-router-dom';
 import logoHeader from './../../images/logoHeader.svg';
 
 const EntryUserForm = ({
@@ -11,6 +11,11 @@ const EntryUserForm = ({
   buttonOnText,
   isValid,
 }) => {
+  const history = useHistory();
+  const handleGoHome = () => {
+    history.push('/');
+  };
+
   return (
     <section
       className={`entry-user entry-user_type_${name} ${
@@ -27,6 +32,7 @@ const EntryUserForm = ({
             src={logoHeader}
             className='entry-user__container-form-image'
             alt='лого сайта'
+            onClick={handleGoHome}
           ></img>
           <h2 className='entry-user__container-form-title'>{title}</h2>
 
