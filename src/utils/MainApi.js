@@ -65,7 +65,7 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({
-  domain: 'http://api.mymovie.nomorepartiesxyz.ru', // "api.mymovie.nomorepartiesxyz.ru"
+  domain: 'https://api.mymovie.nomorepartiesxyz.ru', // "api.mymovie.nomorepartiesxyz.ru"
 });
 
-export const BASE_URL = 'http://api.mymovie.nomorepartiesxyz.ru'; // "api.mymovie.nomorepartiesxyz.ru"  158.160.13.244
+export const BASE_URL = 'https://api.mymovie.nomorepartiesxyz.ru'; // "api.mymovie.nomorepartiesxyz.ru"  158.160.13.244
