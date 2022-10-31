@@ -1,5 +1,8 @@
 # movies-explorer-frontend
 
+Ссылка на опубликованный сайт
+https://favmovies.nomoredomains.icu
+
 Ссылка на PullRequest
 https://github.com/vlad-borovkov/movies-explorer-frontend/pull/2
 
