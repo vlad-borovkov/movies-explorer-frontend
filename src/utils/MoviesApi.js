@@ -26,5 +26,3 @@ class MoviesApi {
 export const moviesApi = new MoviesApi({
   domain: 'https://api.nomoreparties.co/', //
 });
-
-export const BASE_URL = 'https://api.mymovie.nomorepartiesxyz.ru'; // "api.mymovie.nomorepartiesxyz.ru"  158.160.13.244

@@ -19,8 +19,6 @@ class MainApi {
       headers: {
         Authorization: `Bearer ${jwt}`, // прокидываем в каждый запрос текущий jwt
         'Content-Type': 'application/json',
-        // Origin: 'https://localhost:3001', // формируются автоматически браузером
-        // Host: 'http://localhost:3000', //
       },
       body: JSON.stringify(body),
     }).then((response) => {
@@ -29,13 +27,34 @@ class MainApi {
   }
 
   register(registerValue) {
-    const registerRoute = '/signup';
-    return this.makeRequest(registerRoute, 'POST', registerValue);
+    const requestUrl = this._domain;
+    return fetch(`${requestUrl}/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(registerValue),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => data);
   }
 
   authorize(authValue) {
-    const authRoute = '/signin';
-    return this.makeRequest(authRoute, 'POST', authValue);
+    const requestUrl = this._domain;
+
+    return fetch(`${requestUrl}/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(authValue),
+    })
+      .then((response) => response.json())
+      .catch((err) => {
+        console.log(`Упс, ошибка ${err}`);
+      });
   }
 
   getUserValue() {
@@ -68,4 +87,4 @@ export const mainApi = new MainApi({
   domain: 'https://api.mymovie.nomorepartiesxyz.ru', // "api.mymovie.nomorepartiesxyz.ru"
 });
 
-export const BASE_URL = 'https://api.mymovie.nomorepartiesxyz.ru'; // "api.mymovie.nomorepartiesxyz.ru"  158.160.13.244
+//export const BASE_URL = 'https://api.mymovie.nomorepartiesxyz.ru'; // "api.mymovie.nomorepartiesxyz.ru"  158.160.13.244
