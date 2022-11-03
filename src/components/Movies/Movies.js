@@ -1,14 +1,19 @@
 import React from 'react';
-import SearchForm from '../SearchForm/SearchForm';
+import SearchFormAll from '../SearchForm/SearchFormAll';
+import SearchFormShort from '../SearchForm/SearchFormShort';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { searchQuery } from '../../utils/SearchQuery';
 import { moviesApi } from '../../utils/MoviesApi';
 import { mainApi } from '../../utils/MainApi';
+import { Route, useHistory } from 'react-router-dom';
 
 const Movies = ({ onUpdateSavedFilms }) => {
   const [isMoviesFetched, setMoviesFetched] = React.useState(false); //для спинера
-
+  const [isErrorFetched, setErrorFetched] = React.useState(false);
+  const history = useHistory();
+  // принимаем фильмы с БитФИльм
   React.useEffect(() => {
+    setErrorFetched(false);
     moviesApi
       .getMoviesFromServer()
       .then((res) => {
@@ -18,6 +23,7 @@ const Movies = ({ onUpdateSavedFilms }) => {
         setMoviesFetched(true);
       })
       .catch((err) => {
+        setErrorFetched(true);
         console.log(`Упс, ошибка ${err}`);
       });
   }, []);
@@ -29,15 +35,18 @@ const Movies = ({ onUpdateSavedFilms }) => {
   const [userMoviesArray, setUserMoviesArray] = React.useState(
     JSON.parse(localStorage.getItem('userMovies')) || []
   );
-  // принимаем запрос от пользователя и фильтруем все фильмы
-  const hadleSubmitForm = (data) => {
-    const tumblerValue = JSON.parse(localStorage.getItem('shortsIsOn')); // получили состояние тумблера
+  //  фильтруем все фильмы на /movies
+  const handleSubmitForm = (quaryValue) => {
+    console.log(quaryValue);
+    const allMoviesFilter = JSON.parse(localStorage.getItem('shortsIsOnAll')); // получили состояние тумблера для /movies
     const allMoviesArray = JSON.parse(localStorage.getItem('movies')); // получили из сторидж все фильмы
+
     const filteredArray = searchQuery.filterByQuery(
       allMoviesArray,
-      data.movieQuery,
-      tumblerValue
-    );
+      quaryValue,
+      allMoviesFilter
+    ); // передали запрос из формы со страницы фильмов
+
     //вернуть отфильтрованный массив значений в соответсвии со всеми условиями(запрос, тумблер)
     localStorage.setItem('userMovies', JSON.stringify(filteredArray));
     setUserMoviesArray(JSON.parse(localStorage.getItem('userMovies')));
@@ -45,26 +54,12 @@ const Movies = ({ onUpdateSavedFilms }) => {
       setIsEmptyAllMovies(true);
     } else setIsEmptyAllMovies(false);
   };
-
-  const [isEmptySavedMoviesArray, setIsEmptySavedMovies] =
-    React.useState(Boolean);
-  // получаем массив сохранённых пользователей фильмов из MainAp
-  const [savedMovies, setSavedMovies] = React.useState(
-    JSON.parse(localStorage.getItem('savedMoviesLocalStorage'))
-  );
-  // принимаем запрос и фильтруем сохранённые фильмы
-  const hadleSavedSubmitForm = (data) => {
-    const tumblerValue = JSON.parse(localStorage.getItem('shortsIsOn'));
-    const filteredArray = searchQuery.filterByQuery(
-      savedMovies,
-      data.movieQuery,
-      tumblerValue
-    );
-
-    setSavedMovies(filteredArray);
-    if (filteredArray.length === 0) {
-      setIsEmptySavedMovies(true);
-    } else setIsEmptySavedMovies(false);
+  // отфильтровать при нажатии тумблера
+  const handleTumblerAllSearch = () => {
+    const allMoviesQuery = localStorage.getItem('renderAllMovisQuery');
+    if (allMoviesQuery.length >= 1) {
+      handleSubmitForm(allMoviesQuery);
+    } else return;
   };
 
   const [cardIsUpdate, setCardIsUpdate] = React.useState(false);
@@ -72,6 +67,13 @@ const Movies = ({ onUpdateSavedFilms }) => {
     setCardIsUpdate(!cardIsUpdate);
   };
 
+  const [isEmptySavedMoviesArray, setIsEmptySavedMovies] =
+    React.useState(Boolean);
+
+  // сохраняем массив фильмов пользователя из MainApi
+  const [savedMovies, setSavedMovies] = React.useState(
+    JSON.parse(localStorage.getItem('savedMoviesLocalStorage'))
+  );
   // принимаем сохраненные пользователем фильмы и подписываемся на события
   React.useEffect(() => {
     mainApi
@@ -86,15 +88,61 @@ const Movies = ({ onUpdateSavedFilms }) => {
         );
         setSavedMovies(savedMoviesLocalStorage);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.status === 401) {
+          history.push('/');
+          localStorage.clear();
+        }
+      });
   }, [onUpdateSavedFilms, cardIsUpdate]);
+
+  //  фильтруем фильмы на /saved-movies
+  const handleSavedSubmitForm = (quaryValue) => {
+    const shortsMoviesTumbler = JSON.parse(
+      localStorage.getItem('shortsMoviesFilter')
+    );
+    const usersMoviesArray = JSON.parse(
+      localStorage.getItem('savedMoviesLocalStorage')
+    );
+
+    const filteredArray = searchQuery.filterByQuery(
+      usersMoviesArray,
+      quaryValue,
+      shortsMoviesTumbler
+    );
+
+    setSavedMovies(filteredArray);
+    if (filteredArray.length === 0) {
+      setIsEmptySavedMovies(true);
+    } else setIsEmptySavedMovies(false);
+  };
+
+  const handleTumblerShortsSearch = () => {
+    const shortsMoviesQuery = localStorage.getItem('renderShortsMoviesQuery');
+
+    if (shortsMoviesQuery !== null && shortsMoviesQuery.length >= 1) {
+      handleSavedSubmitForm(shortsMoviesQuery);
+    } else return;
+  };
 
   return (
     <>
-      <SearchForm
-        allMoviesQuery={hadleSubmitForm}
-        savedMoviesQuery={hadleSavedSubmitForm}
-      />
+      <Route path='/movies'>
+        <SearchFormAll
+          allMoviesQuery={handleSubmitForm}
+          handleTumblerAllSearch={handleTumblerAllSearch}
+          handleTumblerShortsSearch={handleTumblerShortsSearch}
+        />
+      </Route>
+
+      <Route path='/saved-movies'>
+        <SearchFormShort
+          savedMoviesQuery={handleSavedSubmitForm}
+          handleTumblerShortsSearch={handleTumblerShortsSearch}
+          handleTumblerAllSearch={handleTumblerAllSearch}
+        />
+      </Route>
+
       <MoviesCardList
         moviesIsFetching={isMoviesFetched}
         updatedUserMovies={userMoviesArray}
@@ -102,6 +150,7 @@ const Movies = ({ onUpdateSavedFilms }) => {
         cardIsUpdate={() => handleUpdateCard()}
         isEmptyAllMoviesArray={isEmptyAllMoviesArray}
         isEmptySavedMoviesArray={isEmptySavedMoviesArray}
+        isErrorFetched={isErrorFetched}
       />
     </>
   );

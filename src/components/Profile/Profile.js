@@ -4,28 +4,26 @@ import { useForm } from 'react-hook-form';
 import { mainApi } from '../../utils/MainApi';
 import { useHistory } from 'react-router-dom';
 
-export default function Profile({ onUpdateProfile, onLogOutProfile }) {
+export default function Profile({
+  onUpdateProfile,
+  onLogOutProfile,
+  pushSuccessRegistration,
+  pushFailRegistration,
+}) {
   //подписка на контекст текущего пользователя
   const currentUser = React.useContext(CurrentUserContext);
   const history = useHistory();
 
-  const [isSuccessUpd, setSuccessUpd] = React.useState(false); // доделать логику
+  const [isSuccessUpd, setSuccessUpd] = React.useState(
+    JSON.parse(localStorage.getItem('updStatus') || false)
+  );
 
   const [isEditButtonPush, setEditButtonPush] = React.useState(false);
   const handlerEditProfile = () => {
     setEditButtonPush(!isEditButtonPush);
   };
 
-  const handleSubmitProfile = (data) => {
-    mainApi
-      .changeUserInfo(data)
-      .then((data) => {
-        onUpdateProfile();
-        handlerEditProfile();
-      })
-      .catch((err) => console.log(err));
-    //обновить компонент, чтобы отобразить результаты
-  };
+  const [errorMessageServer, setErrorMessageServer] = React.useState('');
 
   const handlerLogOut = () => {
     localStorage.clear();
@@ -33,10 +31,37 @@ export default function Profile({ onUpdateProfile, onLogOutProfile }) {
     history.push('/');
   };
 
+  const handleSubmitProfile = (data) => {
+    if (data.name === currentUser.name && data.email === currentUser.email) {
+      pushFailRegistration();
+      handlerEditProfile();
+      return;
+    } else {
+      mainApi
+        .changeUserInfo(data)
+        .then((data) => {
+          if (data.message) {
+            setErrorMessageServer(data.message);
+          }
+          return data;
+        })
+        .then((data) => {
+          setSuccessUpd(localStorage.setItem('updStatus', true));
+          onUpdateProfile(); // шлём сигнал для обновления контекста
+          pushSuccessRegistration();
+          handlerEditProfile();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //обновить компонент, чтобы отобразить результаты
+    }
+  };
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({ mode: 'onChange' });
 
   return (
@@ -108,12 +133,14 @@ export default function Profile({ onUpdateProfile, onLogOutProfile }) {
 
           <div className='profile__control'>
             <p className='profile__error-message'>
-              {errors?.name?.message || errors?.email?.message}
+              {errors?.name?.message ||
+                errors?.email?.message ||
+                errorMessageServer}
             </p>
             {isEditButtonPush ? (
               <button
                 className={`profile__control-save ${
-                  isSuccessUpd ? 'profile__control-save_error' : ''
+                  !isValid ? 'profile__control-save_error' : ''
                 }`}
                 type='submit'
                 form='edit-rofile'

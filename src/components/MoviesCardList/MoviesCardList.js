@@ -14,6 +14,7 @@ export default function MoviesCardList(props) {
     cardIsUpdate,
     isEmptyAllMoviesArray,
     isEmptySavedMoviesArray,
+    isErrorFetched,
   } = props;
 
   // определяем текущий размер окна, чтобы выдать пагинацию, удаляем слушатель после выхода с этой страницы
@@ -136,6 +137,8 @@ export default function MoviesCardList(props) {
         <p className='movie-list__message'>
           {isEmptyAllMoviesArray &&
             `Таких фильмов еще не придумали. Повторите другой запрос`}
+          {isErrorFetched &&
+            'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'}
         </p>
         {moviesIsFetching ? (
           <ul className='movie-list'>
@@ -158,22 +161,24 @@ export default function MoviesCardList(props) {
         )}
       </Route>
       <Route path='/saved-movies'>
-        <p className='movie-list__message'>
-          {/* {savedUserMovies.length === 0 && `Здесь фильмы еще не живут.`} */}
-        </p>
         {moviesIsFetching ? (
-          <ul className='movie-list'>
-            {savedUserMovies.map((item) => (
-              <MovieCard
-                key={item.id || item._id}
-                cardItem={item}
-                handleSaveCard={handleSaveCard}
-                handleDeleteCard={handleDeleteCard}
-                savedUserMovies={savedUserMovies}
-                onCardClick={handleClickCard}
-              />
-            ))}
-          </ul>
+          <>
+            <p className='movie-list__message'>
+              {savedUserMovies.length === 0 && `Здесь фильмы еще не живут.`}
+            </p>
+            <ul className='movie-list'>
+              {savedUserMovies.map((item) => (
+                <MovieCard
+                  key={item.id || item._id}
+                  cardItem={item}
+                  handleSaveCard={handleSaveCard}
+                  handleDeleteCard={handleDeleteCard}
+                  savedUserMovies={savedUserMovies}
+                  onCardClick={handleClickCard}
+                />
+              ))}
+            </ul>
+          </>
         ) : (
           <Preloader />
         )}

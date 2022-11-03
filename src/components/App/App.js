@@ -12,9 +12,11 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute';
 import { mainApi } from '../../utils/MainApi.js';
 import { moviesApi } from '../../utils/MoviesApi';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import SuccessRegistrationPopup from '../InfoToolTip/SuccessRegistrationPopup.js';
+import FailRegistrationPopup from '../InfoToolTip/FailRegistrationPopup.js';
 
 function App() {
   const [isOpenMenu, setOpenMenu] = React.useState(false);
@@ -22,8 +24,23 @@ function App() {
   function handleMenuClick() {
     setOpenMenu(true);
   }
+
+  // popups registration allerts
+  const [isSuccessRegistrationPopupOpen, setSuccessRegistrationPopupOpen] =
+    React.useState(false);
+  const pushSuccessRegistration = () => {
+    setSuccessRegistrationPopupOpen(!isSuccessRegistrationPopupOpen);
+  };
+  const [isFailRegistrationPopupOpen, setFailRegistrationPopupOpen] =
+    React.useState(false);
+  const pushFailRegistration = () => {
+    setFailRegistrationPopupOpen(!isFailRegistrationPopupOpen);
+  };
+
   function closeAllPopups() {
     setOpenMenu(false);
+    setFailRegistrationPopupOpen(false);
+    setSuccessRegistrationPopupOpen(false);
   }
 
   //стейт авторизации
@@ -37,7 +54,7 @@ function App() {
   const onUpdateProfile = () => {
     setIsProfileUpdate(!isProfileUpdate);
   };
-
+  const history = useHistory();
   //получаем глобальный стейт информации пользователя и передаём в контекст после авторизации.
   const [currentUser, setCurrentUser] = React.useState({});
   React.useEffect(() => {
@@ -48,6 +65,12 @@ function App() {
           setCurrentUser(res);
         })
         .catch((err) => {
+          if (err.status === 401) {
+            setLoggedIn(false);
+            localStorage.clear();
+            history.push('/');
+            return;
+          }
           console.log(`Упс, ошибка ${err}`);
         });
     }
@@ -58,7 +81,6 @@ function App() {
     setIsSavedMoviesUpdate(!isSavedMoviesUpdate);
   };
 
-  // const history = useHistory();
   const location = useLocation();
   const currentLocation = location.pathname;
   return (
@@ -79,10 +101,13 @@ function App() {
             <Route exact path='/'>
               <Main />
             </Route>
+
             <Route path='/sign-up'>
+              {isLogedIn && <Redirect to='/movies' />}
               <Register />
             </Route>
             <Route path='/sign-in'>
+              {isLogedIn && <Redirect to='/movies' />}
               <Login setLogginStatus={() => setLogginStatus(true)} />
             </Route>
 
@@ -92,6 +117,8 @@ function App() {
               loggedIn={isLogedIn}
               onUpdateProfile={() => onUpdateProfile()}
               onLogOutProfile={() => setLogginStatus(false)}
+              pushSuccessRegistration={pushSuccessRegistration}
+              pushFailRegistration={pushFailRegistration}
             />
 
             <ProtectedRoute
@@ -111,14 +138,24 @@ function App() {
               <PageNotFound />
             </Route>
             <Route>
-              {isLogedIn ? (
-                <Redirect to='/movies' />
-              ) : (
-                <Redirect to='/sign-in' />
-              )}
+              {isLogedIn ? <Redirect to='/movies' /> : <Redirect to='/' />}
             </Route>
           </Switch>
           <PopupMenu handleCloseMenu={closeAllPopups} isOpenMenu={isOpenMenu} />
+
+          <FailRegistrationPopup
+            isOpen={isFailRegistrationPopupOpen}
+            onClose={closeAllPopups}
+            type={'failUpdate'}
+            message={'Введите обновлённые данные'}
+          />
+
+          <SuccessRegistrationPopup
+            isOpen={isSuccessRegistrationPopupOpen}
+            onClose={closeAllPopups}
+            type={'succsesUpdate'}
+            message={'Данные успешно обновлены'}
+          />
         </main>
         {(currentLocation === '/' ||
           currentLocation === '/movies' ||

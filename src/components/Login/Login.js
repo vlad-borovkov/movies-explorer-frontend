@@ -2,7 +2,6 @@ import React from 'react';
 import EntryUserForm from '../EntryUserForm/EntryUserForm';
 import { useHistory } from 'react-router-dom';
 import { mainApi } from '../../utils/MainApi';
-
 import { useForm } from 'react-hook-form';
 
 const Login = ({ isLoginOpen, setLogginStatus }) => {

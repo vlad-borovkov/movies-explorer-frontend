@@ -24,5 +24,5 @@ class MoviesApi {
 }
 
 export const moviesApi = new MoviesApi({
-  domain: 'https://api.nomoreparties.co/', //
+  domain: 'https://api.nomoreparties.co', //
 });

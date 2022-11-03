@@ -10,6 +10,7 @@ class SearchQuery {
     this._allMoviesArray = allMoviesArray;
     this._queryValue = queryValue;
     this._tumblerValue = tumblerValue;
+    //console.log(this._queryValue);
 
     if (this._tumblerValue === true) {
       return this._allMoviesArray.filter(

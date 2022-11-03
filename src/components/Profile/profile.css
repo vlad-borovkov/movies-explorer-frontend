@@ -160,6 +160,17 @@
     top: -35px;
 }
 
+.profile__sucsess-message {
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 13px;
+    text-align: center;
+    color: greenyellow;
+    position: absolute;
+    top: -35px;
+}
 
 @media screen and (max-width: 769px) and (min-width: 420px) {
     .profile {
