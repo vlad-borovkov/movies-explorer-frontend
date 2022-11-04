@@ -23,7 +23,12 @@ export default function Profile({
     setEditButtonPush(!isEditButtonPush);
   };
 
-  const [errorMessageServer, setErrorMessageServer] = React.useState('');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm({ mode: 'onChange' });
 
   const handlerLogOut = () => {
     localStorage.clear();
@@ -33,7 +38,7 @@ export default function Profile({
 
   const handleSubmitProfile = (data) => {
     if (data.name === currentUser.name && data.email === currentUser.email) {
-      pushFailRegistration();
+      pushFailRegistration('Упс. Вы не обновили данные');
       handlerEditProfile();
       return;
     } else {
@@ -41,7 +46,10 @@ export default function Profile({
         .changeUserInfo(data)
         .then((data) => {
           if (data.message) {
-            setErrorMessageServer(data.message);
+            pushFailRegistration(data.message);
+            handlerEditProfile();
+            reset();
+            throw new Error(data.message);
           }
           return data;
         })
@@ -57,12 +65,6 @@ export default function Profile({
       //обновить компонент, чтобы отобразить результаты
     }
   };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ mode: 'onChange' });
 
   return (
     <section className='profile-section'>
@@ -133,9 +135,7 @@ export default function Profile({
 
           <div className='profile__control'>
             <p className='profile__error-message'>
-              {errors?.name?.message ||
-                errors?.email?.message ||
-                errorMessageServer}
+              {errors?.name?.message || errors?.email?.message}
             </p>
             {isEditButtonPush ? (
               <button

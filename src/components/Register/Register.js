@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { mainApi } from '../../utils/MainApi';
 import { useForm } from 'react-hook-form';
 
-const Register = (props) => {
+const Register = ({ setLogginStatus }) => {
   const [errorMessageServer, setErrorMessageServer] = React.useState('');
   const resetErrorMessageFromServer = () => {
     setErrorMessageServer('');
@@ -19,18 +19,38 @@ const Register = (props) => {
   } = useForm({ mode: 'onChange' });
 
   const handlerSubmitRegister = (data) => {
+    const password = data.password;
     mainApi
       .register(data)
       .then((data) => {
         if (data.message) {
           setErrorMessageServer(data.message);
+          reset();
         }
         return data;
       })
       .then((data) => {
         if (data._id) {
-          history.push('/sign-in');
-          reset();
+          const authValue = { email: data.email, password };
+          mainApi
+            .authorize(authValue)
+            .then((data) => {
+              if (data.message) {
+                setErrorMessageServer(data.message);
+              }
+              return data;
+            })
+            .then((data) => {
+              if (data.token) {
+                reset();
+                localStorage.setItem('jwt', data.token);
+                setLogginStatus(); //прокидываем функцию на изменение стейта авторизации в app
+                history.push('/movies');
+              }
+            })
+            .catch((err) => {
+              console.log(`Упс, ошибка ${err}`);
+            });
         }
       })
       .catch((err) => {
@@ -45,7 +65,6 @@ const Register = (props) => {
       title='Добро пожаловать!'
       buttonOnText='Зарегистрироваться'
       onSubmit={handleSubmit(handlerSubmitRegister)}
-      isOpen={props.isOpen}
       isValid={isValid}
     >
       <label className='entry-user__container-form-input-label'>Имя</label>

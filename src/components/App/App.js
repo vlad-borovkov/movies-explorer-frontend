@@ -11,7 +11,6 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute';
 import { mainApi } from '../../utils/MainApi.js';
-import { moviesApi } from '../../utils/MoviesApi';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
@@ -33,8 +32,10 @@ function App() {
   };
   const [isFailRegistrationPopupOpen, setFailRegistrationPopupOpen] =
     React.useState(false);
-  const pushFailRegistration = () => {
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const pushFailRegistration = (errorMessage) => {
     setFailRegistrationPopupOpen(!isFailRegistrationPopupOpen);
+    setErrorMessage(errorMessage);
   };
 
   function closeAllPopups() {
@@ -104,7 +105,7 @@ function App() {
 
             <Route path='/sign-up'>
               {isLogedIn && <Redirect to='/movies' />}
-              <Register />
+              <Register setLogginStatus={() => setLogginStatus(true)} />
             </Route>
             <Route path='/sign-in'>
               {isLogedIn && <Redirect to='/movies' />}
@@ -147,7 +148,7 @@ function App() {
             isOpen={isFailRegistrationPopupOpen}
             onClose={closeAllPopups}
             type={'failUpdate'}
-            message={'Введите обновлённые данные'}
+            message={errorMessage}
           />
 
           <SuccessRegistrationPopup
