@@ -3,117 +3,53 @@ import SamplePic from './../../images/sampleMoviePic.svg';
 import MovieCardButton from '../MovieCardButton/MovieCardButton';
 import { Route } from 'react-router-dom';
 
-export default function MovieCard() {
+export default function MovieCard({
+  cardItem,
+  handleSaveCard,
+  handleDeleteCard,
+  onCardClick,
+  savedUserMovies,
+}) {
+  //проверка на сохранение в массиве сохранённых пользователем фильмов
+
+  const isSaved = savedUserMovies.some(
+    (element) => element.movieId === cardItem.id
+  );
+
+  const handleClickCard = () => {
+    onCardClick(cardItem);
+  };
+
   return (
-    <>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
+    <li className='movie-card'>
+      <div className='movie-card__header'>
+        <h3 className='movie-card__name'>{cardItem.nameRU}</h3>
+        <p className='movie-card__duration'>{cardItem.duration} минут</p>
+      </div>
+      <Route path='/movies'>
         <img
           className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
+          src={`https://api.nomoreparties.co${cardItem.image.url}`}
+          alt={cardItem.nameRU}
+          onClick={handleClickCard}
         ></img>
-        <MovieCardButton />
-      </li>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
+      </Route>
+
+      <Route path='/saved-movies'>
         <img
           className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
+          src={cardItem.image}
+          alt={cardItem.nameRU}
+          onClick={handleClickCard}
         ></img>
-        <MovieCardButton />
-      </li>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
-        <img
-          className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
-        ></img>
-        <MovieCardButton />
-      </li>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
-        <img
-          className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
-        ></img>
-        <MovieCardButton />
-      </li>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
-        <img
-          className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
-        ></img>
-        <MovieCardButton />
-      </li>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
-        <img
-          className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
-        ></img>
-        <MovieCardButton />
-      </li>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
-        <img
-          className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
-        ></img>
-        <MovieCardButton />
-      </li>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
-        <img
-          className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
-        ></img>
-        <MovieCardButton />
-      </li>
-      <li className='movie-card'>
-        <div className='movie-card__header'>
-          <h3 className='movie-card__name'>В погоне за Бенкси</h3>
-          <p className='movie-card__duration'>27 минут</p>
-        </div>
-        <img
-          className='movie-card__image'
-          src={SamplePic}
-          alt='В погоне за Бенкси'
-        ></img>
-        <MovieCardButton />
-      </li>
-    </>
+      </Route>
+
+      <MovieCardButton
+        cardItem={cardItem}
+        onCardSave={handleSaveCard}
+        onCardDelete={handleDeleteCard}
+        isSavedMovies={isSaved}
+      />
+    </li>
   );
 }

@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    position: relative;
 }
 
 .form__input {
@@ -38,7 +39,21 @@
     color: #A0A0A0;
 }
 
-.form__error {}
+
+.form__error {
+    margin-left: 20px;
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-decoration: none;
+    width: 300px;
+    position: absolute;
+    bottom: -21px;
+    left: -20px;
+}
 
 .form__submit {
     background-color: transparent;
@@ -49,6 +64,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.form__submit_disabled {
+    opacity: 0.5;
 }
 
 .form__submit_image {}

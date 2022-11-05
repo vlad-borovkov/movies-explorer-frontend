@@ -1,36 +1,53 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, useHistory } from 'react-router-dom';
 import logoHeader from './../../images/logoHeader.svg';
 
-const EntryUserForm = (props) => {
+const EntryUserForm = ({
+  name,
+  isOpen,
+  onSubmit,
+  title,
+  children,
+  buttonOnText,
+  isValid,
+}) => {
+  const history = useHistory();
+  const handleGoHome = () => {
+    history.push('/');
+  };
+
   return (
     <section
-      className={`entry-user entry-user_type_${props.name} ${
-        props.isOpen ? 'entry-user_on' : ''
+      className={`entry-user entry-user_type_${name} ${
+        isOpen ? 'entry-user_on' : ''
       }`}
     >
       <div className='entry-user__container-form'>
         <form
-          onSubmit={props.onSubmit}
+          onSubmit={onSubmit}
           className='entry-user__form'
-          name={`${props.name}-user`}
+          name={`${name}-user`}
         >
           <img
             src={logoHeader}
             className='entry-user__container-form-image'
             alt='лого сайта'
+            onClick={handleGoHome}
           ></img>
-          <h2 className='entry-user__container-form-title'>{props.title}</h2>
+          <h2 className='entry-user__container-form-title'>{title}</h2>
 
           {/* инпуты разных форм здесь */}
-          {props.children}
+          {children}
 
           <button
-            className='entry-user__container-form-submit-button'
+            disabled={!isValid}
+            className={`entry-user__container-form-submit-button ${
+              !isValid && 'entry-user__container-form-submit-button_disabled'
+            }`}
             type='submit'
-            value={`${props.buttonOnText}`}
+            value={`${buttonOnText}`}
           >
-            {`${props.buttonOnText}`}
+            {`${buttonOnText}`}
           </button>
         </form>
         <Route path='/sign-up'>
