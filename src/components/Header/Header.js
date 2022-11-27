@@ -4,7 +4,13 @@ import Navigation from '../Navigation/Navigation';
 import { useLocation, useHistory } from 'react-router-dom';
 
 const Header = (props) => {
-  const { handleMenuClick, onUpdateSavedFilms, loggedIn } = props;
+  const {
+    handleMenuClick,
+    onUpdateSavedFilms,
+    loggedIn,
+    handleLightClick,
+    handleDarkClick,
+  } = props;
 
   const location = useLocation();
   const currentPath = location.pathname;
@@ -21,6 +27,10 @@ const Header = (props) => {
         alt='логотип'
         onClick={handleGoHome}
       ></img>
+      <div>
+        <button onClick={handleLightClick}>Светлая</button>
+        <button onClick={handleDarkClick}>Тёмная</button>
+      </div>
       <Navigation
         handleMenuClick={handleMenuClick}
         onUpdateSavedFilms={onUpdateSavedFilms}

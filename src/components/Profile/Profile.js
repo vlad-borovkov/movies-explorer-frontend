@@ -3,6 +3,7 @@ import { CurrentUserContext } from './../../contexts/CurrentUserContext';
 import { useForm } from 'react-hook-form';
 import { mainApi } from '../../utils/MainApi';
 import { useHistory } from 'react-router-dom';
+import { ThemeType } from './../../contexts/Theme.js';
 
 export default function Profile({
   onUpdateProfile,
@@ -13,6 +14,8 @@ export default function Profile({
   //подписка на контекст текущего пользователя
   const currentUser = React.useContext(CurrentUserContext);
   const history = useHistory();
+
+  const currentTheme = React.useContext(ThemeType);
 
   const [isSuccessUpd, setSuccessUpd] = React.useState(
     JSON.parse(localStorage.getItem('updStatus') || false)

@@ -1,11 +1,42 @@
+html[data-theme="light"] {
+    --header-background-color: #DDDEE3;
+    --header-background-loggedin-color: #9fd289fa;
+    --header-text-color: #000000;
+
+    --header-button-sign-in-background: #3456F3;
+    --header-button-sign-in-text: white;
+
+    --header-button-account-background: #ffffff;
+    --header-button-account-text: #000000;
+    --header-button-account-border: 2px solid rgba(170, 170, 170, 0.2);
+
+}
+
+html[data-theme="dark"] {
+    --header-background-color: #3b3f4f;
+    --header-background-loggedin-color: #445b3bfa;
+    --header-text-color: #f6f1f1;
+
+    --header-button-sign-in-background: #7389eb;
+    --header-button-sign-in-text: rgb(85, 28, 28);
+
+    --header-button-account-background: #824c4c;
+    --header-button-account-text: #f4f1f1;
+    --header-button-account-border: 2px solid rgba(245, 236, 236, 0.2);
+
+}
+
+
+
 .header {
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
     height: 74px;
-    background-color: #DDDEE3;
+    background-color: var(--header-background-color);
     justify-content: space-between;
+    transition: background-color 200ms linear;
 }
 
 .header_off {
@@ -13,7 +44,7 @@
 }
 
 .header_loggedIn {
-    background: #9fd289fa;
+    background: var(--header-background-loggedin-color);
 }
 
 .header__logo {
@@ -55,8 +86,9 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-    color: #000000;
+    color: var(--header-text-color);
     text-decoration: none;
+    transition: color 500ms linear;
 }
 
 .menu__link_bold {
@@ -66,8 +98,8 @@
 .menu__sign-in_btn {
     width: 76px;
     height: 32px;
-    background-color: #3456F3;
-    color: white;
+    background-color: var(--header-button-sign-in-background);
+    color: var(--header-button-sign-in-text);
     border-radius: 3px;
     border: 0;
     font-style: normal;
@@ -75,15 +107,16 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
+    transition: background-color 500ms linear, color 500ms linear;
 }
 
 .menu__account_btn {
     display: flex;
     width: 100px;
     height: 32px;
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    border: 2px solid rgba(170, 170, 170, 0.2);
+    background-color: var(--header-button-account-background);
+    color: var(--header-button-account-text);
+    border: var(--header-button-account-border);
     border-radius: 50px;
 
     font-family: Inter, Arial, sans-serif;
@@ -97,6 +130,8 @@
     justify-content: center;
 
     text-decoration: none;
+
+    transition: background-color 500ms linear, color 500ms linear, border 500ms linear;
 }
 
 .menu__account_btn_user-logo {
@@ -108,12 +143,13 @@
 .menu__account_btn_user-set {
     margin: 0;
     text-decoration: none;
-    color: #000000;
+    color: var(--header-button-account-text);
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
+    transition: color 500ms linear;
 }
 
 
@@ -141,7 +177,7 @@
     }
 
     .header_movies {
-        background-color: #FAFAFA;
+        background-color: var(--header-background-color);
 
     }
 

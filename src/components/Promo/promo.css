@@ -1,9 +1,23 @@
+html[data-theme='light'] {
+
+    --promo-background-color: #DDDEE3;
+    --promo-title-text-color: #000000;
+
+}
+
+html[data-theme='dark'] {
+
+    --promo-background-color: #535456;
+    --promo-title-text-color: #fdfdfd;
+}
+
 .promo {
-    background-color: #DDDEE3;
+    background-color: var(--promo-background-color);
     width: 100%;
     height: 560px;
     display: flex;
     flex-direction: column;
+    transition: background-color 200ms linear;
 
 }
 
@@ -14,11 +28,12 @@
     font-size: 40px;
     line-height: 52px;
     letter-spacing: -0.04em;
-    color: #000000;
+    color: var(--promo-title-text-color);
     align-self: flex-start;
     margin-left: 70px;
     margin-top: 50px;
     width: 626px;
+    transition: color 500ms linear;
 }
 
 .promo__logo {
@@ -29,6 +44,7 @@
     margin-bottom: 60px;
     margin-right: 70px;
     align-self: flex-end;
+    transition: 500ms linear;
 }
 
 @media screen and (max-width: 769px) and (min-width: 420px) {
@@ -36,6 +52,7 @@
         max-width: 100vw;
         height: 844px;
         align-items: center;
+        background-color: var(--promo-background-color);
     }
 
     .promo__title {
@@ -45,7 +62,7 @@
         font-size: 40px;
         line-height: 52px;
         letter-spacing: -0.04em;
-        color: #000000;
+        color: var(--promo-title-text-color);
         align-self: center;
         text-align: center;
         width: 680px;
@@ -72,6 +89,7 @@
         align-items: center;
         max-width: 100vw;
         height: 630px;
+        background-color: var(--promo-background-color);
     }
 
     .promo__title {
@@ -82,7 +100,7 @@
         line-height: 39px;
         text-align: center;
         letter-spacing: -0.04em;
-
+        color: var(--promo-title-text-color);
         align-self: center;
         text-align: center;
         width: 300px;

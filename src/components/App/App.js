@@ -14,10 +14,26 @@ import { mainApi } from '../../utils/MainApi.js';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import { ThemeType } from '../../contexts/Theme';
+import { useTheme } from '../../hooks/use-theme';
 import SuccessRegistrationPopup from '../InfoToolTip/SuccessRegistrationPopup.js';
 import FailRegistrationPopup from '../InfoToolTip/FailRegistrationPopup.js';
 
 function App() {
+  const { setTheme } = useTheme();
+  const [themeType, setThemeType] = React.useState(
+    localStorage.getItem('app-theme') || ''
+  );
+
+  const handleLightClick = () => {
+    setTheme('light');
+    setThemeType('light');
+  };
+  const handleDarkClick = () => {
+    setTheme('dark');
+    setThemeType('dark');
+  };
+
   const [isOpenMenu, setOpenMenu] = React.useState(false);
 
   function handleMenuClick() {
@@ -58,6 +74,7 @@ function App() {
   const history = useHistory();
   //получаем глобальный стейт информации пользователя и передаём в контекст после авторизации.
   const [currentUser, setCurrentUser] = React.useState({});
+
   React.useEffect(() => {
     if (isLogedIn) {
       mainApi
@@ -86,82 +103,89 @@ function App() {
   const currentLocation = location.pathname;
   return (
     <div className='page'>
-      <CurrentUserContext.Provider value={currentUser}>
-        {(currentLocation === '/' ||
-          currentLocation === '/movies' ||
-          currentLocation === '/saved-movies' ||
-          currentLocation === '/profile') && (
-          <Header
-            handleMenuClick={handleMenuClick}
-            onUpdateSavedFilms={() => onUpdateSavedFilms()}
-            loggedIn={isLogedIn}
-          />
-        )}
-        <main>
-          <Switch>
-            <Route exact path='/'>
-              <Main />
-            </Route>
-
-            <Route path='/sign-up'>
-              {isLogedIn && <Redirect to='/movies' />}
-              <Register setLogginStatus={() => setLogginStatus(true)} />
-            </Route>
-            <Route path='/sign-in'>
-              {isLogedIn && <Redirect to='/movies' />}
-              <Login setLogginStatus={() => setLogginStatus(true)} />
-            </Route>
-
-            <ProtectedRoute
-              path='/profile'
-              component={Profile}
-              loggedIn={isLogedIn}
-              onUpdateProfile={() => onUpdateProfile()}
-              onLogOutProfile={() => setLogginStatus(false)}
-              pushSuccessRegistration={pushSuccessRegistration}
-              pushFailRegistration={pushFailRegistration}
-            />
-
-            <ProtectedRoute
-              path='/movies'
-              component={Movies}
+      <ThemeType.Provider value={themeType}>
+        <CurrentUserContext.Provider value={currentUser}>
+          {(currentLocation === '/' ||
+            currentLocation === '/movies' ||
+            currentLocation === '/saved-movies' ||
+            currentLocation === '/profile') && (
+            <Header
+              handleLightClick={handleLightClick}
+              handleDarkClick={handleDarkClick}
+              handleMenuClick={handleMenuClick}
+              onUpdateSavedFilms={() => onUpdateSavedFilms()}
               loggedIn={isLogedIn}
             />
+          )}
+          <main>
+            <Switch>
+              <Route exact path='/'>
+                <Main />
+              </Route>
 
-            <ProtectedRoute
-              path='/saved-movies'
-              component={Movies}
-              loggedIn={isLogedIn}
-              onUpdateSavedFilms={isSavedMoviesUpdate}
+              <Route path='/sign-up'>
+                {isLogedIn && <Redirect to='/movies' />}
+                <Register setLogginStatus={() => setLogginStatus(true)} />
+              </Route>
+              <Route path='/sign-in'>
+                {isLogedIn && <Redirect to='/movies' />}
+                <Login setLogginStatus={() => setLogginStatus(true)} />
+              </Route>
+
+              <ProtectedRoute
+                path='/profile'
+                component={Profile}
+                loggedIn={isLogedIn}
+                onUpdateProfile={() => onUpdateProfile()}
+                onLogOutProfile={() => setLogginStatus(false)}
+                pushSuccessRegistration={pushSuccessRegistration}
+                pushFailRegistration={pushFailRegistration}
+              />
+
+              <ProtectedRoute
+                path='/movies'
+                component={Movies}
+                loggedIn={isLogedIn}
+              />
+
+              <ProtectedRoute
+                path='/saved-movies'
+                component={Movies}
+                loggedIn={isLogedIn}
+                onUpdateSavedFilms={isSavedMoviesUpdate}
+              />
+
+              <Route path='*'>
+                <PageNotFound />
+              </Route>
+              <Route>
+                {isLogedIn ? <Redirect to='/movies' /> : <Redirect to='/' />}
+              </Route>
+            </Switch>
+            <PopupMenu
+              handleCloseMenu={closeAllPopups}
+              isOpenMenu={isOpenMenu}
             />
 
-            <Route path='*'>
-              <PageNotFound />
-            </Route>
-            <Route>
-              {isLogedIn ? <Redirect to='/movies' /> : <Redirect to='/' />}
-            </Route>
-          </Switch>
-          <PopupMenu handleCloseMenu={closeAllPopups} isOpenMenu={isOpenMenu} />
+            <FailRegistrationPopup
+              isOpen={isFailRegistrationPopupOpen}
+              onClose={closeAllPopups}
+              type={'failUpdate'}
+              message={errorMessage}
+            />
 
-          <FailRegistrationPopup
-            isOpen={isFailRegistrationPopupOpen}
-            onClose={closeAllPopups}
-            type={'failUpdate'}
-            message={errorMessage}
-          />
-
-          <SuccessRegistrationPopup
-            isOpen={isSuccessRegistrationPopupOpen}
-            onClose={closeAllPopups}
-            type={'succsesUpdate'}
-            message={'Данные успешно обновлены'}
-          />
-        </main>
-        {(currentLocation === '/' ||
-          currentLocation === '/movies' ||
-          currentLocation === '/saved-movies') && <Footer />}
-      </CurrentUserContext.Provider>
+            <SuccessRegistrationPopup
+              isOpen={isSuccessRegistrationPopupOpen}
+              onClose={closeAllPopups}
+              type={'succsesUpdate'}
+              message={'Данные успешно обновлены'}
+            />
+          </main>
+          {(currentLocation === '/' ||
+            currentLocation === '/movies' ||
+            currentLocation === '/saved-movies') && <Footer />}
+        </CurrentUserContext.Provider>
+      </ThemeType.Provider>
     </div>
   );
 }

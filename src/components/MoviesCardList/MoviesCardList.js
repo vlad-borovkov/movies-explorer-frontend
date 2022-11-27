@@ -167,7 +167,7 @@ export default function MoviesCardList(props) {
               {savedUserMovies.length === 0 && `Здесь фильмы еще не живут.`}
             </p>
             <ul className='movie-list'>
-              {savedUserMovies.map((item) => (
+              {savedUserMovies.map((item, index) => (
                 <MovieCard
                   key={item.id || item._id}
                   cardItem={item}
