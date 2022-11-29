@@ -2,6 +2,7 @@ import React from 'react';
 import logoHeader from './../../images/logoHeader.svg';
 import Navigation from '../Navigation/Navigation';
 import { useLocation, useHistory } from 'react-router-dom';
+import ThemeTogler from '../ThemeToggle/ThemeToggler';
 
 const Header = (props) => {
   const {
@@ -28,8 +29,10 @@ const Header = (props) => {
         onClick={handleGoHome}
       ></img>
       <div>
-        <button onClick={handleLightClick}>Светлая</button>
-        <button onClick={handleDarkClick}>Тёмная</button>
+        <ThemeTogler
+          handleLightClick={handleLightClick}
+          handleDarkClick={handleDarkClick}
+        />
       </div>
       <Navigation
         handleMenuClick={handleMenuClick}

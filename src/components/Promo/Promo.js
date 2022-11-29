@@ -3,14 +3,8 @@ import logoPath from './../../images/logoPromo.svg';
 import logoDarkPath from './../../images/logoPromo_dark.svg';
 import { ThemeType } from '../../contexts/Theme.js';
 
-import { useEffect } from 'react';
-
 const Promo = ({}) => {
   const currentTheme = React.useContext(ThemeType);
-
-  useEffect(() => {
-    console.log(currentTheme);
-  }, [currentTheme]);
 
   return (
     <section className='promo'>

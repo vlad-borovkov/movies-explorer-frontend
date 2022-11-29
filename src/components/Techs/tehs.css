@@ -1,5 +1,15 @@
+html[data-theme="light"] {
+    --tehs-background-color: #F5F5F5;
+    --section-title-text-color: #000000
+}
+
+html[data-theme="dark"] {
+    --tehs-background-color: #888888;
+    --section-title-text-color: #F5F5F5;
+}
+
 .techs {
-    background-color: #F5F5F5;
+    background-color: var(--tehs-background-color);
     max-width: 100vw;
     height: 625px;
     display: flex;
@@ -27,7 +37,7 @@
     line-height: 58px;
     /* identical to box height, or 116% */
     letter-spacing: -0.04em;
-    color: #000000;
+    color: var(--section-title-text-color);
 }
 
 .section-subtitle {
@@ -45,7 +55,7 @@
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -0.04em;
-    color: #000000;
+    color: var(--section-title-text-color);
 
 }
 
@@ -85,7 +95,7 @@
         padding-left: 18px;
         padding-right: 18px;
         height: 651px;
-        background-color: #FAFAFA;
+        background-color: var(--tehs-background-color);
     }
 
     .section-title {
@@ -96,7 +106,7 @@
         line-height: 36px;
         text-align: center;
         letter-spacing: -0.04em;
-        color: #000000;
+        color: var(--section-title-text-color);
         margin-top: 60px;
     }
 

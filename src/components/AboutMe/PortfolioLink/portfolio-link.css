@@ -1,3 +1,11 @@
+html[data-theme='light'] {
+    --portfolio-link-text-color: #000000;
+}
+
+html[data-theme='dark'] {
+    --portfolio-link-text-color: #fcfbfb;
+}
+
 .portfolio-link__wrap {
     display: flex;
     flex-direction: row;
@@ -15,7 +23,7 @@
     font-size: 30px;
     line-height: 50px;
     letter-spacing: -0.04em;
-    color: #000000;
+    color: var(--portfolio-link-text-color);
     text-decoration: none;
     flex-direction: row;
     width: 100%;
@@ -44,6 +52,6 @@
         font-size: 18px;
         line-height: 28px;
         letter-spacing: -0.04em;
-        color: #000000;
+        color: var(--portfolio-link-text-color);
     }
 }

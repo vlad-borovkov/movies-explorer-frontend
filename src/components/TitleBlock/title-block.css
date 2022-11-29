@@ -1,3 +1,15 @@
+html[data-theme='light'] {
+    --title-block-border: #000000;
+    --title-block-text-color: #000000;
+}
+
+html[data-theme='dark'] {
+    --title-block-border: #ffffff;
+    --title-block-text-color: #ffffff;
+}
+
+
+
 .title-block {
     width: 1140px;
     max-width: 100%;
@@ -5,7 +17,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid var(--title-block-border);
     margin-top: 100px;
 }
 
@@ -17,7 +29,7 @@
     font-size: 22px;
     line-height: 27px;
     letter-spacing: -0.04em;
-    color: #000000;
+    color: var(--title-block-border);
 }
 
 @media screen and (max-width: 769px) and (min-width: 420px) {

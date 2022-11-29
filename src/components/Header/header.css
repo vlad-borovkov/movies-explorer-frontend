@@ -131,13 +131,14 @@ html[data-theme="dark"] {
 
     text-decoration: none;
 
-    transition: background-color 500ms linear, color 500ms linear, border 500ms linear;
+    transition: linear 500ms;
 }
 
 .menu__account_btn_user-logo {
     width: 9px;
     height: 12px;
     margin-right: 7px;
+
 }
 
 .menu__account_btn_user-set {

@@ -1,5 +1,27 @@
+html[data-theme='light'] {
+    --about-background-color: #FAFAFA;
+    --about-grid-table-text: #000000;
+    --about-background-color-grid-graph-first-num: #3456F3;
+    --about-text-grid-graph-first-num: #FFFFFF;
+    --about-text-grid-graph-second-num: #000000;
+    --about-background-color-grid-graph-second-num: #F2F2F2;
+    --about-text-grid-graph-legend: #A0A0A0;
+
+}
+
+html[data-theme='dark'] {
+    --about-background-color: #888888;
+    --about-grid-table-text: #FAFAFA;
+
+    --about-background-color-grid-graph-first-num: #1e328c;
+    --about-text-grid-graph-first-num: #ffffff;
+    --about-text-grid-graph-second-num: #ffffff;
+    --about-background-color-grid-graph-second-num: #2d2d2d;
+    --about-text-grid-graph-legend: #e6e2e2;
+}
+
 .about {
-    background-color: #FAFAFA;
+    background-color: var(--about-background-color);
     max-width: 100vw;
     height: 608px;
     display: flex;
@@ -36,7 +58,7 @@
     font-size: 20px;
     line-height: 24px;
     letter-spacing: -0.04em;
-    color: #000000;
+    color: var(--about-grid-table-text);
     width: 550px;
     max-width: 100%;
     grid-area: title_step;
@@ -50,7 +72,7 @@
     font-size: 20px;
     line-height: 24px;
     letter-spacing: -0.04em;
-    color: #000000;
+    color: var(--about-grid-table-text);
     width: 550px;
     max-width: 100%;
     grid-area: title_week;
@@ -64,7 +86,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
-    color: #000000;
+    color: var(--about-grid-table-text);
     grid-area: ph_step;
 }
 
@@ -76,7 +98,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
-    color: #000000;
+    color: var(--about-grid-table-text);
     grid-area: ph_week;
 }
 
@@ -103,8 +125,8 @@
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    background-color: #3456F3;
-    color: #FFFFFF;
+    background-color: var(--about-background-color-grid-graph-first-num);
+    color: var(--about-text-grid-graph-first-num);
     width: 228px;
     max-width: 100%;
     display: flex;
@@ -119,10 +141,10 @@
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    color: #000000;
+    color: var(--about-text-grid-graph-second-num);
     width: 912px;
     max-width: 100%;
-    background-color: #F2F2F2;
+    background-color: var(--about-background-color-grid-graph-second-num);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,7 +157,7 @@
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    color: #A0A0A0;
+    color: var(--about-text-grid-graph-legend);
     width: 228px;
     max-width: 100%;
     background-color: transparent;
@@ -151,7 +173,7 @@
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    color: #A0A0A0;
+    color: var(--about-text-grid-graph-legend);
     width: 912px;
     max-width: 100%;
     background-color: transparent;

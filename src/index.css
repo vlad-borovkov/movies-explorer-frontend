@@ -3,6 +3,7 @@
 
 @import url(./components/Page/page.css);
 @import url(./components/Header/header.css);
+@import url(./components/ThemeToggle/theme-togler.css);
 @import url(./components/Promo/promo.css);
 
 @import url(./components/PopupMenu/popup.css);

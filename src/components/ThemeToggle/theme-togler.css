@@ -1,0 +1,120 @@
+.theme-toggle {
+    display: flex;
+    flex-direction: row;
+}
+
+.theme-toggle__label {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    margin-top: 1px;
+}
+
+
+.theme-toggle-ios {
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    margin: 0px 14px;
+    position: relative;
+    vertical-align: middle;
+    font-size: 14px;
+    user-select: none;
+}
+
+.theme-toggle-ios .theme-toggle-ios-switch {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 36px;
+    height: 20px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    vertical-align: top;
+    background: #EBEBEB;
+    transition: .2s;
+}
+
+.theme-toggle-ios .theme-toggle-ios-switch:before {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    transition: .15s;
+}
+
+.theme-toggle-ios input[type=checkbox] {
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.theme-toggle-ios input[type=checkbox]:not(:disabled):active+.theme-toggle-ios-switch:before {
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+}
+
+.theme-toggle-ios input[type=checkbox]:checked+.theme-toggle-ios-switch {
+    background: #156138;
+}
+
+.theme-toggle-ios input[type=checkbox]:checked+.theme-toggle-ios-switch:before {
+    transform: translateX(15px);
+}
+
+/* Hover */
+.theme-toggle-ios input[type="checkbox"]:not(:disabled)+.theme-toggle-ios-switch {
+    cursor: pointer;
+
+}
+
+/* Disabled */
+.theme-toggle-ios input[type=checkbox]:disabled+.theme-toggle-ios-switch {
+    filter: grayscale(70%);
+    border-color: #EBEBEB;
+}
+
+.checkbox-ios input[type=checkbox]:disabled+.theme-toggle-ios-switch:before {
+    background: #eee;
+}
+
+/* Focus */
+.theme-toggle-ios.focused .theme-toggle-ios-switch:before {
+    box-shadow: inset 0px 0px 4px #ff5623;
+}
+
+@media screen and (max-width: 769px) and (min-width: 420px) {
+    .theme-toggle {
+        margin: 0;
+        margin-left: 16px;
+    }
+
+    .filter {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 32px;
+    }
+}
+
+@media screen and (max-width: 420px) and (min-width: 310px) {
+    .theme-toggle-ios {
+        margin: 0;
+        margin-left: 13px;
+    }
+
+    .filter {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 41px;
+    }
+}

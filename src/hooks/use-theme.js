@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+
 import { useLayoutEffect } from 'react';
 
 //мэтчим системную тему с темой нашего сайта
